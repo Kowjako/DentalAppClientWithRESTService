@@ -15,6 +15,7 @@ Program przedstawiający prosty program do zarządzania przychodniami dentystycz
 🔧 **Entity Framework Core**  
 🔧 **Fluent Validation**  
 🔧 **AutoMapper**  
-🔧 **Microsoft SQL Server**
+🔧 **Microsoft SQL Server**  
+🔧 **Swagger UI**
 
 ## Wygląd aplikacji
