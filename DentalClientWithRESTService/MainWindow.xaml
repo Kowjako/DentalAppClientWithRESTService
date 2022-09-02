@@ -45,6 +45,27 @@
                            Margin="5" Source="../../Icons/dark.png"/>
                 </Grid>
             </Border>
+            <DockPanel Grid.Row="1" LastChildFill="True">
+                <Menu IsMainMenu="True" DockPanel.Dock="Top">
+                    <MenuItem Header="Lekarze" Template="{DynamicResource VsMenuTop}" >
+                        <MenuItem Header="Pokaż wszystkich" Template="{DynamicResource VsMenuSub}" />
+                    </MenuItem>
+                    <MenuItem Header="Przychodnie" Template="{DynamicResource VsMenuTop}">
+                        <MenuItem Header="Pokaż wszystkie" Template="{DynamicResource VsMenuSub}" />
+                    </MenuItem>
+                    <MenuItem Header="Opearcje" Template="{DynamicResource VsMenuTop}">
+                        <MenuItem Header="Pokaż wszystkie" Template="{DynamicResource VsMenuSub}" Icon="icon_backlogs.png" />
+                        <Separator Template="{DynamicResource VsMenuSep}" />
+                        <MenuItem Header="Kategorie" Template="{DynamicResource VsMenuSub}">
+                            <MenuItem Header="Chirurgia" Template="{DynamicResource VsMenuSub}" />
+                            <MenuItem Header="Kardiologia" Template="{DynamicResource VsMenuSub}" />
+                            <MenuItem Header="Stomatologia" Template="{DynamicResource VsMenuSub}" />
+                        </MenuItem>
+                    </MenuItem>
+                </Menu>
+                <ContentControl/>
+            </DockPanel>
+            
         </Grid>
     </Border>
 </Window>

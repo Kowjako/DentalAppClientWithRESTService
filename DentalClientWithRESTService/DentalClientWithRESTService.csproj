@@ -14,6 +14,7 @@
     <None Remove="Icons\dark.png" />
     <None Remove="Icons\light.png" />
     <None Remove="Icons\main.png" />
+    <None Remove="Icons\rightArrow.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +26,7 @@
     <Resource Include="Icons\dark.png" />
     <Resource Include="Icons\light.png" />
     <Resource Include="Icons\main.png" />
+    <Resource Include="Icons\rightArrow.png" />
   </ItemGroup>
 
 </Project>
