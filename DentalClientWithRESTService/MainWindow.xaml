@@ -5,8 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DentalClientWithRESTService"
         mc:Ignorable="d"
-        Title="Dental Client" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Height="850" Width="1200">
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 0 1">
+                <Grid x:Name="header" 
+                  Style="{DynamicResource headerTheme}"
+                  MouseLeftButtonDown="header_MouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Width="35" Height="35" Panel.ZIndex="1" Margin="5" Source="../../Icons/main.png"/>
+                    <TextBlock Grid.Column="1" 
+                           VerticalAlignment="Center"
+                           Margin="10 0 0 0"
+                           FontSize="18"
+                           Style="{DynamicResource textBlockTheme}"
+                           Text="Dental Clinic REST Client"/>
+                    <Image Grid.Column="3" Width="25" 
+                           Cursor="Hand"
+                           Height="25" Panel.ZIndex="1" 
+                           x:Name="closeBtn"
+                           MouseLeftButtonDown="closeBtn_MouseLeftButtonDown"
+                            Source="../../Icons/closeDark.png"/>
+                    <Image Grid.Column="2" Width="35" 
+                           Height="35" Panel.ZIndex="1" 
+                           Cursor="Hand"
+                           x:Name="changeThemeBtn"
+                           MouseLeftButtonDown="changeThemeBtn_MouseLeftButtonDown"
+                           Margin="5" Source="../../Icons/dark.png"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

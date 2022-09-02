@@ -4,6 +4,27 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Fonts\Roboto-Light.ttf" />
+    <None Remove="Icons\closeDark.png" />
+    <None Remove="Icons\closeLight.png" />
+    <None Remove="Icons\dark.png" />
+    <None Remove="Icons\light.png" />
+    <None Remove="Icons\main.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Roboto-Light.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\closeDark.png" />
+    <Resource Include="Icons\closeLight.png" />
+    <Resource Include="Icons\dark.png" />
+    <Resource Include="Icons\light.png" />
+    <Resource Include="Icons\main.png" />
+  </ItemGroup>
 
 </Project>
