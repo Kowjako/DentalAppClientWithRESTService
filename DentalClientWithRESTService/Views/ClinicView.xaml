@@ -7,6 +7,36 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0" Background="{DynamicResource bgBrush}">
+                <TextBlock Text="Przychodnie"
+                           Style="{DynamicResource tbStyle}"/>
+            </DockPanel>
+
+            <DockPanel Grid.Row="1" Background="{DynamicResource bgBrushGrid}">
+                <DataGrid Style="{DynamicResource gridStyle}"
+                          ColumnWidth="*"
+                          ColumnHeaderStyle="{DynamicResource gridHeaderStyle}"
+                          AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nazwa"/>
+                        <DataGridTextColumn Header="Cena"/>
+                        <DataGridTextColumn Header="Kierownik"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Grid>
+
+        <StackPanel Grid.Column="1"
+                    Background="{DynamicResource bgBrushOptions}"/>
     </Grid>
 </UserControl>
