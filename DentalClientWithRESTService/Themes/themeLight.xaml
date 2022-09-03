@@ -115,9 +115,47 @@
         <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
     </Style>
 
+    <Style x:Key="btnStyle" TargetType="{x:Type Button}">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
+        <Setter Property="BorderBrush" Value="#39ace7"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Margin" Value="0 5 0 0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                CornerRadius="15"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter Margin="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="#0784b5"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="tbDefStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5 10 0 5"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
+    </Style>
+
     <Style x:Key="typeStyle" TargetType="TextBox">
         <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
+        <Setter Property="Margin" Value="0 5 0 0"/>
         <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">

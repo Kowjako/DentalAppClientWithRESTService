@@ -17,5 +17,24 @@
                        Style="{DynamicResource tbStyle}"
                        HorizontalAlignment="Center"/>
         </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <TextBlock Style="{DynamicResource tbDefStyle}" Text="Login"/>
+                <TextBox Style="{DynamicResource typeStyle}"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}" Text="Hasło"/>
+                <TextBox Style="{DynamicResource typeStyle}"/>
+                <Button Content="Zaloguj się" Style="{DynamicResource btnStyle}" Margin="0 20 0 0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
