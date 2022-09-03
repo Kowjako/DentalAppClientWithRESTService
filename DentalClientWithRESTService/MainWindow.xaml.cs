@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DentalClientWithRESTService.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -57,6 +58,21 @@ namespace DentalClientWithRESTService
                                            : new BitmapImage(new Uri(@"/Icons/closeDark.png", UriKind.Relative));
             isLightTheme = !isLightTheme;
             
+        }
+
+        private void clinicMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new ClinicViewModel();
+        }
+
+        private void operationMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new OperationViewModel();
+        }
+
+        private void employeeMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new EmployeeViewModel();
         }
     }
 }

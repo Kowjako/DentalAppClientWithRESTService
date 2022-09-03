@@ -12,7 +12,9 @@
     <None Remove="Icons\closeDark.png" />
     <None Remove="Icons\closeLight.png" />
     <None Remove="Icons\dark.png" />
+    <None Remove="Icons\gear.png" />
     <None Remove="Icons\light.png" />
+    <None Remove="Icons\logout.png" />
     <None Remove="Icons\main.png" />
     <None Remove="Icons\rightArrow.png" />
   </ItemGroup>
@@ -24,7 +26,9 @@
     <Resource Include="Icons\closeDark.png" />
     <Resource Include="Icons\closeLight.png" />
     <Resource Include="Icons\dark.png" />
+    <Resource Include="Icons\gear.png" />
     <Resource Include="Icons\light.png" />
+    <Resource Include="Icons\logout.png" />
     <Resource Include="Icons\main.png" />
     <Resource Include="Icons\rightArrow.png" />
   </ItemGroup>

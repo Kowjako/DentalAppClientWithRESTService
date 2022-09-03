@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DentalClientWithRESTService"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
         Height="850" Width="1200">
@@ -46,26 +47,45 @@
                 </Grid>
             </Border>
             <DockPanel Grid.Row="1" LastChildFill="True">
+                <!-- Main menu -->
                 <Menu IsMainMenu="True" DockPanel.Dock="Top">
-                    <MenuItem Header="Lekarze" Template="{DynamicResource VsMenuTop}" >
-                        <MenuItem Header="Pokaż wszystkich" Template="{DynamicResource VsMenuSub}" />
-                    </MenuItem>
-                    <MenuItem Header="Przychodnie" Template="{DynamicResource VsMenuTop}">
-                        <MenuItem Header="Pokaż wszystkie" Template="{DynamicResource VsMenuSub}" />
-                    </MenuItem>
-                    <MenuItem Header="Opearcje" Template="{DynamicResource VsMenuTop}">
-                        <MenuItem Header="Pokaż wszystkie" Template="{DynamicResource VsMenuSub}" Icon="icon_backlogs.png" />
-                        <Separator Template="{DynamicResource VsMenuSep}" />
-                        <MenuItem Header="Kategorie" Template="{DynamicResource VsMenuSub}">
-                            <MenuItem Header="Chirurgia" Template="{DynamicResource VsMenuSub}" />
-                            <MenuItem Header="Kardiologia" Template="{DynamicResource VsMenuSub}" />
-                            <MenuItem Header="Stomatologia" Template="{DynamicResource VsMenuSub}" />
+                    <MenuItem Header="Menu" 
+                              x:Name="configMenu"
+                              Margin="5 0 0 0"
+                              Template="{DynamicResource VsMenuTop}" 
+                              Click="employeeMenu_Click">
+                        <MenuItem Header="Opcje"
+                                  Template="{DynamicResource VsMenuSub}"
+                                  Icon="../../Icons/gear.png">
+                            <MenuItem Header="Załoguj się" Template="{DynamicResource VsMenuSub}" />
+                            <MenuItem Header="Załóż konto" Template="{DynamicResource VsMenuSub}" />
                         </MenuItem>
+                        <Separator Template="{DynamicResource VsMenuSep }"/>
+                        <MenuItem Header="Zamknij" 
+                                  Icon="../../Icons/logout.png"
+                                  Template="{DynamicResource VsMenuSub}"/>
+
+                    </MenuItem>
+                    <MenuItem Header="Lekarze" 
+                              x:Name="employeeMenu"
+                              Template="{DynamicResource VsMenuTop}" 
+                              Click="employeeMenu_Click">
+                    </MenuItem>
+                    <MenuItem Header="Przychodnie" 
+                              x:Name="clinicMenu"
+                              Click="clinicMenu_Click"
+                              Template="{DynamicResource VsMenuTop}">
+                    </MenuItem>
+                    <MenuItem Header="Opearcje" 
+                              x:Name="operationMenu"
+                              Click="operationMenu_Click"
+                              Template="{DynamicResource VsMenuTop}">
                     </MenuItem>
                 </Menu>
-                <ContentControl/>
-            </DockPanel>
-            
+
+                <!-- View -->
+                <ContentControl Content="{Binding}"/>
+            </DockPanel>            
         </Grid>
     </Border>
 </Window>
