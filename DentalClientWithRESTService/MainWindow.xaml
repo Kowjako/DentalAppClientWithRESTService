@@ -50,19 +50,18 @@
                 <!-- Main menu -->
                 <Menu IsMainMenu="True" DockPanel.Dock="Top">
                     <MenuItem Header="Menu" 
-                              x:Name="configMenu"
-                              Margin="5 0 0 0"
-                              Template="{DynamicResource VsMenuTop}" 
-                              Click="employeeMenu_Click">
+                              Template="{DynamicResource VsMenuTop}">
                         <MenuItem Header="Opcje"
-                                  Template="{DynamicResource VsMenuSub}"
-                                  Icon="../../Icons/gear.png">
-                            <MenuItem Header="Załoguj się" Template="{DynamicResource VsMenuSub}" />
-                            <MenuItem Header="Załóż konto" Template="{DynamicResource VsMenuSub}" />
+                                  Template="{DynamicResource VsMenuSub}">
+                            <MenuItem Header="Załoguj się" Template="{DynamicResource VsMenuSub}" 
+                                      x:Name="loginMenu"
+                                      Click="loginMenu_Click"/>
+                            <MenuItem Header="Załóż konto" Template="{DynamicResource VsMenuSub}"
+                                      x:Name="registerMenu"
+                                      Click="registerMenu_Click"/>
                         </MenuItem>
                         <Separator Template="{DynamicResource VsMenuSep }"/>
-                        <MenuItem Header="Zamknij" 
-                                  Icon="../../Icons/logout.png"
+                        <MenuItem Header="Zamknij"
                                   Template="{DynamicResource VsMenuSub}"/>
 
                     </MenuItem>

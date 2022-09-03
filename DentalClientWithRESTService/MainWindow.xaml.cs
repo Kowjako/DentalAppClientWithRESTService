@@ -74,5 +74,15 @@ namespace DentalClientWithRESTService
         {
             DataContext = new EmployeeViewModel();
         }
+
+        private void loginMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new LoginViewModel();
+        }
+
+        private void registerMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new RegisterViewModel();
+        }
     }
 }
