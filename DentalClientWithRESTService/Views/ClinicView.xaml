@@ -25,11 +25,14 @@
             <DockPanel Grid.Row="1" Background="{DynamicResource bgBrushGrid}">
                 <DataGrid Style="{DynamicResource gridStyle}"
                           ColumnWidth="*"
+                          RowStyle="{DynamicResource gridRowStyle}"
+                          CellStyle="{DynamicResource gridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource gridHeaderStyle}"
                           AutoGenerateColumns="False">
                     <DataGrid.Columns>
+                        <DataGridTextColumn Header="Numer"/>
                         <DataGridTextColumn Header="Nazwa"/>
-                        <DataGridTextColumn Header="Cena"/>
+                        <DataGridTextColumn Header="Adres"/>
                         <DataGridTextColumn Header="Kierownik"/>
                     </DataGrid.Columns>
                 </DataGrid>

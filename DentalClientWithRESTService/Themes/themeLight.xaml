@@ -43,8 +43,8 @@
     <!-- Menu subitem -->
     <ControlTemplate x:Key="VsMenuSub" TargetType="MenuItem">
         <DockPanel TextBlock.FontSize="15px" x:Name="panel">
-            <!-- label, icons, etc. -->
-            <Image Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" Width="20" Margin="5,0" />
+            <!-- Odkomentowac aby uzywac MenuItem Icon-->
+            <!--<Image Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}" Width="20" Margin="5,0" />-->
             <Label Content="{TemplateBinding Header}" Foreground="Black" FontFamily="{StaticResource Roboto}" Margin="0,5,5,5" />
 
             <!-- draw the right arrow only if this menu item has sub items -->
@@ -74,7 +74,7 @@
 
     <!-- Menu -->
     <Style TargetType="Menu">
-        <Setter Property="Background" Value="#948C87" />
+        <Setter Property="Background" Value="#0784b5" />
         <Setter Property="Height" Value="40px" />
     </Style>
 
@@ -91,9 +91,18 @@
         <views:OperationView DataContext = "{Binding}"/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+        <views:LoginView DataContext = "{Binding}"/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:RegisterViewModel}">
+        <views:RegisterView DataContext = "{Binding}"/>
+    </DataTemplate>
+
     <!-- Burhses -->
-    <SolidColorBrush x:Key="bgBrush" Color="#CED4B2"/>
-    <SolidColorBrush x:Key="bgBrushOptions" Color="#FEFAE3"/>
+    <SolidColorBrush x:Key="viewBrush" Color="White"/>
+    <SolidColorBrush x:Key="bgBrush" Color="#39ace7"/>
+    <SolidColorBrush x:Key="bgBrushOptions" Color="#cadeef"/>
     <SolidColorBrush x:Key="bgBrushGrid" Color="#EAECCD"/>
 
     <!-- Common -->
@@ -106,10 +115,33 @@
         <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
     </Style>
 
+    <Style x:Key="typeStyle" TargetType="TextBox">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer Margin="2 3 2 3" x:Name="PART_ContentHost" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="Purple"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Grid -->
     <Style x:Key="gridStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="ColumnWidth" Value="*"/>
         <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
@@ -119,8 +151,8 @@
     <Style x:Key="gridHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="#F3D2D2"/>
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Background" Value="#9bd4e4"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="Padding" Value="0 5 0 5"/>
         <Setter Property="SeparatorVisibility" Value="Visible"/>
         <Setter Property="SeparatorBrush" Value="Black"/>
@@ -128,7 +160,7 @@
 
     <Style x:Key="gridCellStyle" TargetType="{x:Type DataGridCell}">
         <Setter Property="Height" Value="50"/>
-        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -159,5 +191,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    
 
 </ResourceDictionary>
