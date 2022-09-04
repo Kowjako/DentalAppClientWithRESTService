@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RESTDentalService.Entity
 {
@@ -9,6 +7,7 @@ namespace RESTDentalService.Entity
     {
         public Clinic()
         {
+            Employees = new HashSet<Employee>();
             Operations = new HashSet<Operation>();
         }
 
@@ -19,6 +18,7 @@ namespace RESTDentalService.Entity
         public int ManagerId { get; set; }
 
         public virtual Employee Manager { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Operation> Operations { get; set; }
     }
 }

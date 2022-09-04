@@ -19,6 +19,11 @@ namespace RESTDentalService
                     Email = dto.ManagerEmail,
                     Phone = dto.ManagerPhone
                 }));
+
+            CreateMap<Employee, EmployeeDTO>()
+                .ForMember(d => d.Clinic, s => s.MapFrom(dto => dto.ClinicNavigation));
+
+            CreateMap<CreateEmployeeDTO, Employee>();
         }
     }
 }

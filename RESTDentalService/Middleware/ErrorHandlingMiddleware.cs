@@ -25,7 +25,7 @@ namespace RESTDentalService.Middleware
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 await context.Response.WriteAsync(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync("Wystapił błąd po stronie serwera");

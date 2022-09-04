@@ -47,6 +47,7 @@ namespace RESTDentalService
 
             /* Services */
             services.AddScoped<IClinicService, ClinicService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

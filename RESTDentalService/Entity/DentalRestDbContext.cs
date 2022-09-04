@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+#nullable disable
 
 namespace RESTDentalService.Entity
 {
@@ -16,7 +20,6 @@ namespace RESTDentalService.Entity
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +71,11 @@ namespace RESTDentalService.Entity
                 entity.Property(e => e.Surname)
                     .IsRequired()
                     .HasMaxLength(255);
+
+                entity.HasOne(d => d.ClinicNavigation)
+                    .WithMany(p => p.Employees)
+                    .HasForeignKey(d => d.ClinicId)
+                    .HasConstraintName("FK__Employees_ClinicId");
             });
 
             modelBuilder.Entity<Operation>(entity =>

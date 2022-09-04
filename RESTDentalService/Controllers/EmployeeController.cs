@@ -8,46 +8,47 @@ namespace RESTDentalService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ClinicController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
-        private readonly IClinicService _service;
+        private readonly IEmployeeService _service;
 
-        public ClinicController(IClinicService service)
+        public EmployeeController(IEmployeeService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ClinicDTO>>> GetAll()
+        public async Task<ActionResult<List<EmployeeDTO>>> GetAll()
         {
             return Ok(await _service.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClinicDTO>> Get([FromRoute]int id)
+        public async Task<ActionResult<ClinicDTO>> Get([FromRoute] int id)
         {
             return Ok(await _service.GetById(id));
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateClinic([FromBody]CreateClinicDTO dto)
+        public async Task<ActionResult> CreateEmployee([FromBody] CreateEmployeeDTO dto)
         {
             var id = await _service.Create(dto);
-            return Created($"/api/clinic/{id}", null);
+            return Created($"/api/employee/{id}", null);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateClinic([FromRoute]int id, [FromBody]UpdateClinicDTO dto)
+        public async Task<ActionResult> UpdateEmployee([FromRoute] int id, [FromBody] UpdateEmployeeDTO dto)
         {
             await _service.Update(id, dto);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteClinic([FromRoute]int id)
+        public async Task<ActionResult> DeleteEmployee([FromRoute] int id)
         {
-            await _service.Delete(id);
+            await _service.DeleteById(id);
             return NoContent();
         }
+
     }
 }
