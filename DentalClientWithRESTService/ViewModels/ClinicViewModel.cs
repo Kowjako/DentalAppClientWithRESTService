@@ -1,5 +1,6 @@
 ﻿using DentalClientWithRESTService.HTTPClient;
 using DentalClientWithRESTService.Models;
+using RESTDentalService.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,6 +11,30 @@ namespace DentalClientWithRESTService.ViewModels
     public class ClinicViewModel : INotifyPropertyChanged
     {
         public List<Clinic> Clinics { get; set; }
+
+        private Clinic _selectedClinic;
+        public Clinic SelectedClinic
+        {
+            get => _selectedClinic;
+            set
+            {
+                _selectedClinic = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private HttpResponseWrapper _httpResponse;
+        public HttpResponseWrapper HttpResponse
+        {
+            get => _httpResponse;
+            set
+            {
+                _httpResponse = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public CreateClinicDTO CreateClinic { get; set; } = new CreateClinicDTO();
 
         public ClinicViewModel()
         {
@@ -22,7 +47,49 @@ namespace DentalClientWithRESTService.ViewModels
             OnPropertyChanged(nameof(Clinics));
         }
 
+        #region Commands
 
+        private RelayCommand _updateClinic;
+        public RelayCommand UpdateClinic =>
+            _updateClinic ??= new RelayCommand(async (e) =>
+            {
+                var updateClinicDTO = new UpdateClinicDTO() 
+                { 
+                    Name = SelectedClinic.Name, 
+                    Location = SelectedClinic.Location 
+                };
+
+                var response = await HttpClientProxy.Instance.Update($"clinic/{SelectedClinic.Id}", updateClinicDTO);
+                HttpResponse = new HttpResponseWrapper(response);
+            });
+
+        private RelayCommand _deleteClinic;
+        public RelayCommand DeleteClinic =>
+            _deleteClinic ??= new RelayCommand(async (e) =>
+            {
+                var response = await HttpClientProxy.Instance.DeleteById("clinic", SelectedClinic.Id);
+
+                HttpResponse = new HttpResponseWrapper(response);
+
+                var list = await HttpClientProxy.Instance.GetAll("clinic");
+                Clinics = await HttpClientProxy.Instance.ReadDataAsList<Clinic>(list);
+                OnPropertyChanged(nameof(Clinics));
+            });
+
+        private RelayCommand _addClinic;
+        public RelayCommand AddClinic =>
+            _addClinic ??= new RelayCommand(async (e) =>
+            {
+                var response = await HttpClientProxy.Instance.Add("clinic", CreateClinic);
+
+                HttpResponse = new HttpResponseWrapper(response);
+
+                var list = await HttpClientProxy.Instance.GetAll("clinic");
+                Clinics = await HttpClientProxy.Instance.ReadDataAsList<Clinic>(list);
+                OnPropertyChanged(nameof(Clinics));
+            });
+
+        #endregion
 
         #region INotifyPropertyChanged members
 

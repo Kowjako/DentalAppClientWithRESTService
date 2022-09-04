@@ -90,7 +90,9 @@
                 </Menu>
 
                 <!-- View -->
-                <ContentControl Content="{Binding}"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ContentControl Content="{Binding}"/>
+                </ScrollViewer>
             </DockPanel>            
         </Grid>
     </Border>

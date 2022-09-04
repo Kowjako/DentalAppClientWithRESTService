@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RESTDentalService.Entity;
 using RESTDentalService.Middleware;
+using RESTDentalService.Models;
 using RESTDentalService.Services;
 using RESTDentalService.Validators;
 
@@ -29,7 +30,11 @@ namespace RESTDentalService
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("default"));
             });
+
+            /* Auto-Mapper */
             services.AddAutoMapper(GetType().Assembly);
+
+            /* Swagger */
             services.AddSwaggerGen();
 
             /* Fluent Validation */

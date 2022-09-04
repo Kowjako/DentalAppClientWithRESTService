@@ -37,6 +37,7 @@ namespace DentalClientWithRESTService.HTTPClient
             return await _client.DeleteAsync(_baseUrl + url + "/" + id);
         }
 
+
         public async Task<HttpResponseMessage> Update<T>(string url, T data)
         {
             var jsonData = JsonConvert.SerializeObject(data);
