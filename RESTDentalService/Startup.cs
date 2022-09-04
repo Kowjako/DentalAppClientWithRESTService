@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RESTDentalService.Entity;
+using RESTDentalService.Middleware;
 using RESTDentalService.Services;
 
 namespace RESTDentalService
@@ -28,6 +29,8 @@ namespace RESTDentalService
             services.AddAutoMapper(GetType().Assembly);
             services.AddSwaggerGen();
 
+            /* Middlewares */
+            services.AddScoped<ErrorHandlingMiddleware>();
 
             /* Services */
             services.AddScoped<IClinicService, ClinicService>();
@@ -39,6 +42,8 @@ namespace RESTDentalService
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 
