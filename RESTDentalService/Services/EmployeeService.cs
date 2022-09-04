@@ -50,7 +50,6 @@ namespace RESTDentalService.Services
             var employee = _mapper.Map<Employee>(empDTO);
 
             var clinic = await _context.Clinics.FirstOrDefaultAsync(p => p.UniqueNumber.Equals(empDTO.ClinicUniqueNumber));
-            if (clinic == null) throw new ArgumentNullException("Takie przychodni nie istnieje");
 
             employee.ClinicId = clinic.Id;
             _context.Employees.Add(employee);
@@ -71,7 +70,7 @@ namespace RESTDentalService.Services
         public async Task Update(int id, UpdateEmployeeDTO dto)
         {
             var employee = await _context.Employees.FindAsync(id);
-            if (employee == null) throw new ArgumentNullException("Takiej przychodni nie istnieje");
+            if (employee == null) throw new ArgumentNullException("Takiego pracownika nie istnieje");
 
             employee.Name = dto.Name;
             employee.Surname = dto.Surname;
