@@ -13,7 +13,12 @@ namespace DentalClientWithRESTService.ViewModels
 
         public ClinicViewModel()
         {
-            Task.Run(async () => Clinics = await HttpClientProxy.Instance.GetAllClinic()).Wait();
+            Task.Run(async () =>
+            {
+                var response = await HttpClientProxy.Instance.GetAll("clinic");
+                Clinics = await HttpClientProxy.Instance.ReadDataAsList<Clinic>(response);
+            }).Wait();
+
             OnPropertyChanged(nameof(Clinics));
         }
 
