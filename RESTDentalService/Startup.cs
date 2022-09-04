@@ -26,6 +26,7 @@ namespace RESTDentalService
                 opt.UseSqlServer(Configuration.GetConnectionString("default"));
             });
             services.AddAutoMapper(GetType().Assembly);
+            services.AddSwaggerGen();
 
 
             /* Services */
@@ -40,6 +41,9 @@ namespace RESTDentalService
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dental API"));
 
             app.UseRouting();
 

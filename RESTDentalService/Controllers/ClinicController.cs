@@ -17,6 +17,7 @@ namespace RESTDentalService.Controllers
             _service = service;
         }
 
+        [HttpGet]
         public async Task<ActionResult<List<ClinicDTO>>> GetAll()
         {
             return Ok(await _service.GetAll());
