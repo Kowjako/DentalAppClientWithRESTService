@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using RESTDentalService.Entity;
 using RESTDentalService.Middleware;
 using RESTDentalService.Services;
+using RESTDentalService.Validators;
 
 namespace RESTDentalService
 {
@@ -28,6 +31,11 @@ namespace RESTDentalService
             });
             services.AddAutoMapper(GetType().Assembly);
             services.AddSwaggerGen();
+
+            /* Fluent Validation */
+            services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+            services.AddScoped<IValidator<CreateClinicDTO>, CreateClinicDTOValidator>();
+
 
             /* Middlewares */
             services.AddScoped<ErrorHandlingMiddleware>();
