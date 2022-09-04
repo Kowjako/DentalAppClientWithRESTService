@@ -25,15 +25,16 @@
             <DockPanel Grid.Row="1" Background="{DynamicResource bgBrushGrid}">
                 <DataGrid Style="{DynamicResource gridStyle}"
                           ColumnWidth="*"
+                          ItemsSource="{Binding Clinics}"
                           RowStyle="{DynamicResource gridRowStyle}"
                           CellStyle="{DynamicResource gridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource gridHeaderStyle}"
                           AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Numer"/>
-                        <DataGridTextColumn Header="Nazwa"/>
-                        <DataGridTextColumn Header="Adres"/>
-                        <DataGridTextColumn Header="Kierownik"/>
+                        <DataGridTextColumn Header="Numer" Binding="{Binding UniqueNumber}"/>
+                        <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Adres" Binding="{Binding Location}"/>
+                        <DataGridTextColumn Header="Kierownik" Binding="{Binding Manager}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
