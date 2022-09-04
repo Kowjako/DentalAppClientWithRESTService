@@ -25,21 +25,173 @@
             <DockPanel Grid.Row="1" Background="{DynamicResource bgBrushGrid}">
                 <DataGrid Style="{DynamicResource gridStyle}"
                           ColumnWidth="*"
+                          SelectedItem="{Binding SelectedEmployee}"
+                          ItemsSource="{Binding Employees}"
                           RowStyle="{DynamicResource gridRowStyle}"
                           CellStyle="{DynamicResource gridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource gridHeaderStyle}"
                           AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Imię"/>
-                        <DataGridTextColumn Header="Nazwisko"/>
-                        <DataGridTextColumn Header="Telefon"/>
-                        <DataGridTextColumn Header="E-mail"/>
+                        <DataGridTextColumn Header="Imię" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Nazwisko" Binding="{Binding Surname}"/>
+                        <DataGridTextColumn Header="Telefon" Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="E-mail" Binding="{Binding Email}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
         </Grid>
 
-        <StackPanel Grid.Column="1"
-                    Background="{DynamicResource bgBrushOptions}"/>
+        <DockPanel Grid.Column="1"
+                   Background="{DynamicResource bgBrushOptions}">
+
+            <StackPanel DockPanel.Dock="Bottom">
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           Margin="5 5 0 0"
+                           Text="Akcje"/>
+                <Separator Margin="5 5 5 7"/>
+                <Button Style="{DynamicResource btnStyle}"
+                        Margin="5"
+                        Command="{Binding AddEmployee}"
+                        Content="Dodaj pracownika"/>
+                <Button Style="{DynamicResource btnStyle}"
+                        Margin="5"
+                        Command="{Binding UpdateEmployee}"
+                        Content="Modyfikuj pracownika"/>
+                <Button Style="{DynamicResource btnStyle}"
+                        Margin="5"
+                        Command="{Binding DeleteEmployee}"
+                        Content="Usuń wybranego pracownika"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" DataContext="{Binding HttpResponse}">
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           Margin="5 5 0 0"
+                           Text="Status HTTP klienta"/>
+                <Separator Margin="5 5 5 7"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           Margin="5 5 5 10">
+                   <Run Text="Kod statusu: "/>
+                   <Run Text="{Binding ResponseCode, Mode=OneWay}" Foreground="OrangeRed" FontWeight="Bold"/>
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           Margin="5 5 0 0"
+                           Text="Miejsce pracy"/>
+                <Separator Margin="5 5 5 7"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0">
+                    <Run Text="Przychodnia: "/>
+                    <Run Text="{Binding SelectedEmployee.Clinic.Name}"/>
+                </TextBlock>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0">
+                    <Run Text="Adres: "/>
+                    <Run Text="{Binding SelectedEmployee.Clinic.Location}"/>
+                </TextBlock>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 10">
+                    <Run Text="Menadżer: "/>
+                    <Run Text="{Binding SelectedEmployee.Clinic.Manager}"/>
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" DataContext="{Binding CreateEmployee}">
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           Margin="5 5 0 0"
+                           Text="Dodanie pracownika"/>
+                <Separator Margin="5 5 5 7"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Imię"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Nazwisko"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Numer telefonu"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Email"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Numer przychodni"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 10"
+                         Text="{Binding ClinicUniqueNumber, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Top" DataContext="{Binding SelectedEmployee}">
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           Margin="5 5 0 0"
+                           Text="Modyfikuj pracownika"/>
+                <Separator Margin="5 5 5 7"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Imię"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Nazwisko"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Numer telefonu"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="14"
+                           Margin="5 5 0 0"
+                           Text="Email"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
+            </StackPanel>
+
+        </DockPanel>
     </Grid>
 </UserControl>
