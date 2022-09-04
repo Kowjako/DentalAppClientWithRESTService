@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RESTDentalService.Entity;
+using RESTDentalService.Services;
 
 namespace RESTDentalService
 {
@@ -24,6 +25,11 @@ namespace RESTDentalService
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("default"));
             });
+            services.AddAutoMapper(GetType().Assembly);
+
+
+            /* Services */
+            services.AddScoped<IClinicService, ClinicService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
