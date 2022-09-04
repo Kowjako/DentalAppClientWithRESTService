@@ -4,6 +4,7 @@ CREATE TABLE Employees (
 	Surname NVARCHAR(255) NOT NULL,
 	Phone NVARCHAR(25) NOT NULL,
 	Email NVARCHAR(25) NOT NULL,
+	ClinicId INT NOT NULL,
 	CONSTRAINT PK__Employees_Id PRIMARY KEY CLUSTERED (Id),
 );
 GO
@@ -54,4 +55,12 @@ GO
 INSERT INTO Clinics VALUES
 ('RXQ5671234', 'Pomorska Clinic', 'ul. Pomorska, 32', 1),
 ('ABC8651234', 'Miserante Dental Clinic', 'ul. Pomorska, 32', 2)
+GO
+
+ALTER TABLE Employees
+ADD ClinicId INT
+GO
+
+ALTER TABLE Employees
+ADD CONSTRAINT FK__Employees_ClinicId FOREIGN KEY (ClinicId) REFERENCES Clinics(Id)
 GO
