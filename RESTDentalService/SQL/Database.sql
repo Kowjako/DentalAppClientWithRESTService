@@ -44,3 +44,14 @@ GO
 CREATE NONCLUSTERED INDEX IX__Operations_NameCost
 ON Operations (Name, Cost)
 GO
+
+INSERT INTO Employees VALUES
+('Wlodzimierz', 'Kowjako', '575-234-123', 'kowyako@dental.com'),
+('Konrad', 'Kuczynski', '248-337-123', 'kuczynski@dental.com'),
+('Maciej', 'Spaleniak', '111-234-123', 'spaleniak@dental.com')
+GO
+
+INSERT INTO Clinics VALUES
+('RXQ5671234', 'Pomorska Clinic', 'ul. Pomorska, 32', 1),
+('ABC8651234', 'Miserante Dental Clinic', 'ul. Pomorska, 32', 2)
+GO
