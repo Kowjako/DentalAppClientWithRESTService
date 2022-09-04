@@ -159,7 +159,7 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Margin" Value="0 5 0 0"/>
         <Setter Property="CaretBrush" Value="White"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -169,7 +169,6 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="BorderBrush" Value="Lime"/>
-                            <Setter Property="BorderThickness" Value="2"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -183,6 +182,7 @@
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="Background" Value="#07245F"/>
         <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
         <Setter Property="HorizontalGridLinesBrush" Value="White"/>

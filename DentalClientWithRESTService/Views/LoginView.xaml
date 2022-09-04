@@ -33,7 +33,7 @@
                 <TextBox Style="{DynamicResource typeStyle}"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}" Text="Hasło"/>
                 <TextBox Style="{DynamicResource typeStyle}"/>
-                <Button Content="Zaloguj się" Style="{DynamicResource btnStyle}" Margin="0 20 0 0"/>
+                <Button Content="Zaloguj się" Style="{DynamicResource btnStyle}" Margin="0 25 0 0"/>
             </StackPanel>
         </Grid>
     </Grid>

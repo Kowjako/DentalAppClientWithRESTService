@@ -12,6 +12,8 @@
     <None Remove="Icons\closeDark.png" />
     <None Remove="Icons\closeLight.png" />
     <None Remove="Icons\dark.png" />
+    <None Remove="Icons\fsDark.png" />
+    <None Remove="Icons\fsLight.png" />
     <None Remove="Icons\gear.png" />
     <None Remove="Icons\light.png" />
     <None Remove="Icons\logout.png" />
@@ -26,6 +28,8 @@
     <Resource Include="Icons\closeDark.png" />
     <Resource Include="Icons\closeLight.png" />
     <Resource Include="Icons\dark.png" />
+    <Resource Include="Icons\fsDark.png" />
+    <Resource Include="Icons\fsLight.png" />
     <Resource Include="Icons\gear.png" />
     <Resource Include="Icons\light.png" />
     <Resource Include="Icons\logout.png" />

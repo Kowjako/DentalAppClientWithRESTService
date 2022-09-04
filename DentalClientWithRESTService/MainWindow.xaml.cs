@@ -56,8 +56,9 @@ namespace DentalClientWithRESTService
                                                  : new BitmapImage(new Uri(@"/Icons/dark.png", UriKind.Relative));
             closeBtn.Source = isLightTheme ? new BitmapImage(new Uri(@"/Icons/closeLight.png", UriKind.Relative))
                                            : new BitmapImage(new Uri(@"/Icons/closeDark.png", UriKind.Relative));
-            isLightTheme = !isLightTheme;
-            
+            fullscreenBtn.Source = isLightTheme ? new BitmapImage(new Uri(@"/Icons/fsDark.png", UriKind.Relative))
+                                           : new BitmapImage(new Uri(@"/Icons/fsLight.png", UriKind.Relative));
+            isLightTheme = !isLightTheme; 
         }
 
         private void clinicMenu_Click(object sender, RoutedEventArgs e)
@@ -83,6 +84,12 @@ namespace DentalClientWithRESTService
         private void registerMenu_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new RegisterViewModel();
+        }
+
+        private void fullscreenBtn_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            MaxHeight = SystemParameters.WorkArea.Height;
+            this.WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
     }
 }
