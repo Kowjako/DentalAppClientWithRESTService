@@ -61,7 +61,7 @@ namespace RESTDentalService.Services
         public async Task DeleteById(int id)
         {
             var employee = await _context.Employees.FirstOrDefaultAsync(p => p.Id == id);
-            if(employee == null) throw new ArgumentNullException("Takigo pracownika istnieje");
+            if(employee == null) throw new ArgumentNullException("Takiego pracownika nie istnieje");
 
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();

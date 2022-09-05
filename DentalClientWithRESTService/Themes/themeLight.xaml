@@ -115,6 +115,34 @@
         <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
     </Style>
 
+    <Style x:Key="cbStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Background" Value="DarkRed"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Width="30"
+                                Height="30"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <Rectangle Width="10" 
+                                       Height="10"
+                                       Fill="{TemplateBinding Background}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="Orange"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="1.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="btnStyle" TargetType="{x:Type Button}">
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>

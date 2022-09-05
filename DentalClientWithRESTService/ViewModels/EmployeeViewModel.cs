@@ -1,5 +1,6 @@
 ﻿using DentalClientWithRESTService.HTTPClient;
 using DentalClientWithRESTService.Models;
+using DentalClientWithRESTService.Views;
 using RESTDentalService.Models;
 using System;
 using System.Collections.Generic;

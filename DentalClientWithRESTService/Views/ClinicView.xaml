@@ -69,12 +69,28 @@
                            Margin="5 5 0 0"
                            Text="Status HTTP klienta"/>
                 <Separator Margin="5 5 5 7"/>
-                <TextBlock Style="{DynamicResource tbDefStyle}"
+                <DockPanel>
+                    <TextBlock Style="{DynamicResource tbDefStyle}"
+                           DockPanel.Dock="Left" 
                            FontSize="15"
                            Margin="5 5 5 10">
-                   <Run Text="Kod statusu: "/>
-                   <Run Text="{Binding ResponseCode, Mode=OneWay}" Foreground="OrangeRed" FontWeight="Bold"/>
-                </TextBlock>
+                            <Run Text="Kod statusu: "/>
+                            <Run Text="{Binding ResponseCode, Mode=OneWay}" Foreground="OrangeRed" FontWeight="Bold"/>
+                    </TextBlock>
+                    <CheckBox Style="{DynamicResource cbStyle}"
+                              Margin="0 0 5 0"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              DockPanel.Dock="Right"/>
+                    <TextBlock Style="{DynamicResource tbDefStyle}"
+                           DockPanel.Dock="Right" 
+                           FontSize="15"
+                           HorizontalAlignment="Right"
+                           Text="Pokaż odpowiedź: "
+                           Margin="5 5 5 10"/>
+                    
+                </DockPanel>
+                
             </StackPanel>
 
             <StackPanel DockPanel.Dock="Top" DataContext="{Binding CreateClinic}">

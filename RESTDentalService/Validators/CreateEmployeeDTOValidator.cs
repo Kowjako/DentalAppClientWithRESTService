@@ -26,7 +26,7 @@ namespace RESTDentalService.Validators
 
             RuleFor(x => x.ClinicUniqueNumber).Custom((value, context) =>
             {
-                if (!dbContext.Clinics.Any(p => p.UniqueNumber.Equals(value))
+                if (!dbContext.Clinics.Any(p => p.UniqueNumber.Equals(value)))
                 {
                     context.AddFailure("Nie istnieje takiej przychodni");
                 }
