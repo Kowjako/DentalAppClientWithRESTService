@@ -10,6 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
@@ -77,19 +78,6 @@
                             <Run Text="Kod statusu: "/>
                             <Run Text="{Binding ResponseCode, Mode=OneWay}" Foreground="OrangeRed" FontWeight="Bold"/>
                     </TextBlock>
-                    <CheckBox Style="{DynamicResource cbStyle}"
-                              Margin="0 0 5 0"
-                              IsChecked="{Binding IsShowHttpResponse, UpdateSourceTrigger=PropertyChanged}"
-                              HorizontalAlignment="Right"
-                              VerticalAlignment="Center"
-                              DockPanel.Dock="Right"/>
-                    <TextBlock Style="{DynamicResource tbDefStyle}"
-                           DockPanel.Dock="Right" 
-                           FontSize="15"
-                           HorizontalAlignment="Right"
-                           Text="Pokaż odpowiedź: "
-                           Margin="5 5 5 10"/>
-
                 </DockPanel>
 
             </StackPanel>
@@ -210,5 +198,25 @@
             </StackPanel>
 
         </DockPanel>
+
+        <Grid Grid.Column="2" Background="{DynamicResource bgBrushOptions}">
+            <Expander Style="{DynamicResource expStyle}"
+                  DataContext="{Binding HttpResponse}">
+                <StackPanel>
+                    <TextBlock Style="{DynamicResource tbDefStyle}"
+                   FontSize="18"
+                   DockPanel.Dock="Top"
+                   Margin="10"
+                   Text="Odpowiedź HTTP klienta"/>
+                    <TextBox IsReadOnly="True"
+                     Text="{Binding ResponseMessage}"
+                     Margin="10 5 10 5"
+                     DockPanel.Dock="Top"
+                     FontSize="15"
+                     TextWrapping="Wrap"
+                     Style="{DynamicResource typeStyle}"/>
+                </StackPanel>
+            </Expander>
+        </Grid>
     </Grid>
 </UserControl>

@@ -14,21 +14,6 @@ namespace DentalClientWithRESTService.Models
 
         public string ResponseMessage;
 
-        private bool _isShowHttpResponse;
-
-        public bool IsShowHttpResponse
-        {
-            get => _isShowHttpResponse;
-            set
-            {
-                if (value)
-                {
-                    _isShowHttpResponse = false;
-                    new HttpResponseView(ResponseMessage).ShowControl();
-                }
-            }
-        }
-
         public HttpResponseWrapper(HttpResponseMessage response)
         {
             _statusCode = response.StatusCode;

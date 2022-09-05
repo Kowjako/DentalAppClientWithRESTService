@@ -101,6 +101,7 @@
 
     <!-- Brushes -->
     <SolidColorBrush x:Key="viewBrush" Color="#07245F"/>
+    <SolidColorBrush x:Key="borderBrush" Color="Red"/>
     <SolidColorBrush x:Key="bgBrush" Color="#700B97"/>
     <SolidColorBrush x:Key="bgBrushOptions" Color="#8E05C2"/>
     <SolidColorBrush x:Key="bgBrushGrid" Color="#A0C0D6"/>
@@ -113,6 +114,21 @@
         <Setter Property="Margin" Value="15 0 0 0"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
+    </Style>
+
+    <Style x:Key="expStyle" TargetType="{x:Type Expander}">
+        <Setter Property="ExpandDirection" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="#8E05C2"/>
+        <Setter Property="Header">
+            <Setter.Value>
+                <TextBlock Text="Odpowiedź HTTP klienta" FontSize="16" Foreground="White">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90"/>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="cbStyle" TargetType="{x:Type CheckBox}">

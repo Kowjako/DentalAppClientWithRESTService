@@ -101,6 +101,7 @@
 
     <!-- Burhses -->
     <SolidColorBrush x:Key="viewBrush" Color="White"/>
+    <SolidColorBrush x:Key="borderBrush" Color="Black"/>
     <SolidColorBrush x:Key="bgBrush" Color="#39ace7"/>
     <SolidColorBrush x:Key="bgBrushOptions" Color="#cadeef"/>
     <SolidColorBrush x:Key="bgBrushGrid" Color="#EAECCD"/>
@@ -115,6 +116,21 @@
         <Setter Property="FontFamily" Value="{StaticResource Roboto}"/>
     </Style>
 
+    <Style x:Key="expStyle" TargetType="{x:Type Expander}">
+        <Setter Property="ExpandDirection" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Background" Value="#cadeef"/>
+        <Setter Property="Header">
+            <Setter.Value>
+                <TextBlock Text="Odpowiedź HTTP klienta" FontSize="16" Foreground="Black">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90"/>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="cbStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="Background" Value="DarkRed"/>
         <Setter Property="Cursor" Value="Hand"/>
