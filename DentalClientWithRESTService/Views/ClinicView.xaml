@@ -8,22 +8,28 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0" Background="{DynamicResource bgBrush}">
-                <TextBlock Text="Przychodnie"
-                           Style="{DynamicResource tbStyle}"/>
-            </DockPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition MaxHeight="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="1" Background="{DynamicResource bgBrushGrid}">
-                <DataGrid Style="{DynamicResource gridStyle}"
+        <DockPanel Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       Grid.Row="0"
+                       Background="{DynamicResource bgBrush}">
+            <TextBlock Text="Przychodnie"
+                       Style="{DynamicResource tbStyle}"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="1"
+                       Grid.Column="1"
+                       Background="{DynamicResource bgBrushGrid}">
+            <DataGrid Style="{DynamicResource gridStyle}"
                           ColumnWidth="*"
                           SelectedItem="{Binding SelectedClinic}"
                           ItemsSource="{Binding Clinics}"
@@ -31,17 +37,17 @@
                           CellStyle="{DynamicResource gridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource gridHeaderStyle}"
                           AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Numer" Binding="{Binding UniqueNumber}"/>
-                        <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Adres" Binding="{Binding Location}"/>
-                        <DataGridTextColumn Header="Kierownik" Binding="{Binding Manager}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </DockPanel>
-        </Grid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Numer" Binding="{Binding UniqueNumber}"/>
+                    <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Adres" Binding="{Binding Location}"/>
+                    <DataGridTextColumn Header="Kierownik" Binding="{Binding Manager}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
 
-        <DockPanel Grid.Column="1"
+        <DockPanel Grid.Column="2"
+                   Grid.RowSpan="2"
                    Background="{DynamicResource bgBrushOptions}">
 
             <StackPanel DockPanel.Dock="Bottom">
@@ -77,18 +83,6 @@
                             <Run Text="Kod statusu: "/>
                             <Run Text="{Binding ResponseCode, Mode=OneWay}" Foreground="OrangeRed" FontWeight="Bold"/>
                     </TextBlock>
-                    <CheckBox Style="{DynamicResource cbStyle}"
-                              Margin="0 0 5 0"
-                              HorizontalAlignment="Right"
-                              VerticalAlignment="Center"
-                              DockPanel.Dock="Right"/>
-                    <TextBlock Style="{DynamicResource tbDefStyle}"
-                           DockPanel.Dock="Right" 
-                           FontSize="15"
-                           HorizontalAlignment="Right"
-                           Text="Pokaż odpowiedź: "
-                           Margin="5 5 5 10"/>
-                    
                 </DockPanel>
                 
             </StackPanel>
@@ -181,5 +175,26 @@
                          FontSize="14"/>
             </StackPanel>
         </DockPanel>
+
+        <Expander ExpandDirection="Right"
+                  Background="{DynamicResource bgBrushOptions}"
+                  Style="{DynamicResource expStyle}"
+                      Grid.Column="0" Grid.Row="1"
+                      FlowDirection="LeftToRight">
+            <Expander.Header>
+                <TextBlock Text="Ustawienia / status klienta HTTP" FontSize="16">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90"/>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Expander.Header>
+            <StackPanel Width="300" Background="{DynamicResource bgBrushOptions}">
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           Margin="5 5 0 0"
+                           Text="Dodawanie przychodni"/>
+                <Separator Margin="5 5 5 7"/>
+            </StackPanel>
+        </Expander>
     </Grid>
 </UserControl>
