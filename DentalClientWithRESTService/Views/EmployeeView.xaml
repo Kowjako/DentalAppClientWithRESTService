@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="visConverter"/>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="3*"/>
@@ -221,12 +224,35 @@
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="15"
                            Margin="5 5 0 0"
-                           Text="Filtrowanie"/>
+                           Text="Filtracja - na podstawie wyrazu"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Margin="5 5 5 0"
+                         TextWrapping="Wrap"
+                         FontSize="14"/>
                 <Separator Margin="5 5 5 7"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="15"
                            Margin="5 5 0 0"
                            Text="Sortowanie"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Margin="5 5 5 0"
+                              FontSize="14">
+                        <ComboBoxItem Content="Imię"/>
+                        <ComboBoxItem Content="Nazwisko"/>
+                        <ComboBoxItem Content="E-mail"/>
+                    </ComboBox>
+                    <ComboBox Margin="5 5 5 0"
+                              Grid.Column="1"
+                              FontSize="14">
+                        <ComboBoxItem Content="ASC"/>
+                        <ComboBoxItem Content="DESC"/>
+                    </ComboBox>
+                </Grid>
+               
                 <Separator Margin="5 5 5 7"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="15"
@@ -236,6 +262,7 @@
                 <TextBox Style="{DynamicResource typeStyle}"
                          DataContext="{Binding HttpResponse}"
                          Margin="5 5 5 0"
+                         Visibility="{Binding IsResponseReady, Converter={StaticResource visConverter}}"
                          TextWrapping="Wrap"
                          IsReadOnly="True"
                          Text="{Binding ResponseMessage}"

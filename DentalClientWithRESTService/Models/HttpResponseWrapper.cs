@@ -25,6 +25,7 @@ namespace DentalClientWithRESTService.Models
             }
         }
 
+
         public HttpResponseWrapper(HttpResponseMessage response)
         {
             _statusCode = response.StatusCode;
