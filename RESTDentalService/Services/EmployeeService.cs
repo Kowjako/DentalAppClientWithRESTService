@@ -5,13 +5,14 @@ using RESTDentalService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace RESTDentalService.Services
 {
     public interface IEmployeeService
     {
-        Task<List<EmployeeDTO>> GetAll();
+        Task<PagedResult<EmployeeDTO>> GetAll(DentalAdvQuery query);
         Task<EmployeeDTO> GetById(int id);
         Task<int> Create(CreateEmployeeDTO empDTO);
         Task DeleteById(int id);
@@ -29,12 +30,36 @@ namespace RESTDentalService.Services
             _mapper = mapper;
         }
 
-        public async Task<List<EmployeeDTO>> GetAll()
+        public async Task<PagedResult<EmployeeDTO>> GetAll(DentalAdvQuery query)
         {
-            var baseQuery = await _context.Employees.Include(p => p.ClinicNavigation).ToListAsync();
+            var baseQuery = _context.Employees.Include(p => p.ClinicNavigation)
+                                              .Where(p => query.SearchPhrase == null ||
+                                                     p.Name.ToLower().Contains(query.SearchPhrase.ToLower()) ||
+                                                     p.Surname.ToLower().Contains(query.SearchPhrase.ToLower()));
 
-            var result = _mapper.Map<List<EmployeeDTO>>(baseQuery);
-            return result;
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var dictionary = new Dictionary<string, Expression<Func<Employee, string>>>()
+                {
+                    { nameof(Employee.Name), r => r.Name },
+                    { nameof(Employee.Surname), r => r.Surname },
+                    { nameof(Employee.Email), r => r.Email },
+                };
+
+                var sortExpression = dictionary[query.SortBy];
+
+                baseQuery = query.SortDirection == SortType.Asc ?
+                            baseQuery.OrderBy(sortExpression) :
+                            baseQuery.OrderByDescending(sortExpression);
+            }
+
+            var employees = await baseQuery.Skip((query.PageNumber - 1) * 30)
+                                           .Take(30)
+                                           .ToListAsync();
+
+            var result = _mapper.Map<List<EmployeeDTO>>(employees);
+
+            return new PagedResult<EmployeeDTO>(result, baseQuery.Count(), 30, query.PageNumber);
         }
 
         public async Task<EmployeeDTO> GetById(int id)
