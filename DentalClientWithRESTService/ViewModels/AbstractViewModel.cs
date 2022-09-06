@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace DentalClientWithRESTService.ViewModels
 {
@@ -40,6 +41,16 @@ namespace DentalClientWithRESTService.ViewModels
         }
 
         public List<T> Entities { get; set; }
+
+        public async Task RefreshList()
+        {
+            var pagedResultResponse = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)]);
+            PagedData = await HttpClientProxy.Instance.ReadDataAsList<T>(pagedResultResponse);
+            Entities = PagedData.Data.ToList();
+
+            OnPropertyChanged(nameof(Entities));
+            OnPropertyChanged(nameof(PagedData));
+        }
 
         private RelayCommand _nextPage;
         public RelayCommand NextPage =>

@@ -58,11 +58,7 @@ namespace DentalClientWithRESTService.ViewModels
 
                 HttpResponse = new HttpResponseWrapper(response);
 
-                var list = await HttpClientProxy.Instance.GetAll("clinic");
-                PagedData = await HttpClientProxy.Instance.ReadDataAsList<Clinic>(response);
-                Entities = PagedData.Data.ToList();
-
-                OnPropertyChanged(nameof(Entities));
+                await RefreshList();
             });
 
         private RelayCommand _addClinic;
@@ -73,11 +69,7 @@ namespace DentalClientWithRESTService.ViewModels
 
                 HttpResponse = new HttpResponseWrapper(response);
 
-                var list = await HttpClientProxy.Instance.GetAll("clinic");
-                PagedData = await HttpClientProxy.Instance.ReadDataAsList<Clinic>(response);
-                Entities = PagedData.Data.ToList();
-
-                OnPropertyChanged(nameof(Entities));
+                await RefreshList();
             });
 
         #endregion

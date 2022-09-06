@@ -1,7 +1,6 @@
 ﻿using DentalClientWithRESTService.HTTPClient;
 using DentalClientWithRESTService.Models;
 using DentalClinicWithRestService.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,11 +60,7 @@ namespace DentalClientWithRESTService.ViewModels
 
                 HttpResponse = new HttpResponseWrapper(response);
 
-                var list = await HttpClientProxy.Instance.GetAll("employee");
-                PagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
-                Entities = PagedData.Data.ToList();
-
-                OnPropertyChanged(nameof(Entities));
+                await RefreshList();
             });
 
         private RelayCommand _addEmployee;
@@ -76,11 +71,7 @@ namespace DentalClientWithRESTService.ViewModels
 
                 HttpResponse = new HttpResponseWrapper(response);
 
-                var list = await HttpClientProxy.Instance.GetAll("employee");
-                PagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
-                Entities = PagedData.Data.ToList();
-
-                OnPropertyChanged(nameof(Entities));
+                await RefreshList();
             });
 
         #endregion
