@@ -9,13 +9,18 @@ namespace DentalClientWithRESTService.Models
             {"Imię", "Name" },
             {"Nazwisko", "Surname" },
             {"E-mail", "Email" },
+            {"Numer unikalny", "UniqueNumber" },
+            {"Adres", "Location" },
+            {"Nazwa", "Name" },
         };
 
-        public string SearchPhrase { get; set; }
+        public string SearchPhrase { get; set; } = string.Empty;
         public string SortBy { get; set; }
         public string SortDirection { get; set; }
 
-        public string SortByNormalized => _viewToHttpMapper[SortBy.Substring(SortBy.IndexOf(" ") + 1)];
-        public string SortDirectionNormalized => SortDirection.Substring(SortBy.IndexOf(" ") + 1);
+        public string SortByNormalized => SortBy == null ? string.Empty
+                                                         : _viewToHttpMapper[SortBy.Substring(SortBy.IndexOf(" ") + 1)];
+        public string SortDirectionNormalized => SortDirection == null ? string.Empty
+                                                                       : SortDirection.Substring(SortBy.IndexOf(" ") + 1);
     }
 }

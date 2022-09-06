@@ -87,8 +87,11 @@ namespace DentalClientWithRESTService.HTTPClient
             sb.Append("?");
             foreach (var k in param.Keys)
             {
-                sb.Append(k + "=" + param[k]);
-                sb.Append("&");
+                if (!string.IsNullOrEmpty(param[k]))
+                {
+                    sb.Append(k + "=" + param[k]);
+                    sb.Append("&");
+                }
             }
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();

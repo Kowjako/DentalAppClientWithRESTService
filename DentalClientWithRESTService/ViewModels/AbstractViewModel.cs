@@ -64,6 +64,7 @@ namespace DentalClientWithRESTService.ViewModels
                                                                      sortDirection: SearchModel.SortDirectionNormalized,
                                                                      sortBy: SearchModel.SortByNormalized,
                                                                      pageNumber: PagedData.PageNumber + 1);
+                HttpResponse = new HttpResponseWrapper(response);
                 PagedData = await HttpClientProxy.Instance.ReadDataAsList<T>(response);
 
                 Entities = PagedData.Data.ToList();
@@ -82,6 +83,7 @@ namespace DentalClientWithRESTService.ViewModels
                                                                      sortDirection: SearchModel.SortDirectionNormalized,
                                                                      sortBy: SearchModel.SortByNormalized,
                                                                      pageNumber: PagedData.PageNumber - 1);
+                HttpResponse = new HttpResponseWrapper(response);
                 PagedData = await HttpClientProxy.Instance.ReadDataAsList<T>(response);
 
                 Entities = PagedData.Data.ToList();
@@ -99,6 +101,7 @@ namespace DentalClientWithRESTService.ViewModels
                                                                      sortDirection: SearchModel.SortDirectionNormalized,
                                                                      sortBy: SearchModel.SortByNormalized);
                 PagedData = await HttpClientProxy.Instance.ReadDataAsList<T>(response);
+                HttpResponse = new HttpResponseWrapper(response);
 
                 Entities = PagedData.Data.ToList();
 

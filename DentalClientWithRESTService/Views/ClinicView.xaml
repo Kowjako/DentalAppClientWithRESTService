@@ -190,13 +190,69 @@
                     </TextBlock.LayoutTransform>
                 </TextBlock>
             </Expander.Header>
-            <StackPanel Width="300" Background="{DynamicResource bgBrushOptions}">
+            <DockPanel Width="300" Background="{DynamicResource bgBrushOptions}">
+                <Button Style="{DynamicResource btnStyle}"
+                        Margin="5"
+                        Command="{Binding AdvancedSearch}"
+                        DockPanel.Dock="Bottom"
+                        Content="Zastosuj"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="15"
                            Margin="5 5 0 0"
-                           Text="Dodawanie przychodni"/>
-                <Separator Margin="5 5 5 7"/>
-            </StackPanel>
+                           DockPanel.Dock="Top"
+                           Text="Filtracja - na podstawie wyrazu"/>
+                <TextBox Style="{DynamicResource searchStyle}"
+                         Margin="5 5 5 0"
+                         DataContext="{Binding SearchModel}"
+                         Height="30"
+                         Text="{Binding SearchPhrase, UpdateSourceTrigger=PropertyChanged}"
+                         DockPanel.Dock="Top"
+                         TextWrapping="Wrap"/>
+                <Separator Margin="5 5 5 7" DockPanel.Dock="Top"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           DockPanel.Dock="Top"
+                           Margin="5 5 0 0"
+                           Text="Sortowanie"/>
+                <Grid DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Margin="5 5 5 0"
+                              DataContext="{Binding SearchModel}"
+                              SelectedItem="{Binding SortBy}"
+                              FontSize="14">
+                        <ComboBoxItem Content="Numer unikalny"/>
+                        <ComboBoxItem Content="Nazwa"/>
+                        <ComboBoxItem Content="Adres"/>
+                    </ComboBox>
+                    <ComboBox Margin="5 5 5 0"
+                              DataContext="{Binding SearchModel}"
+                              SelectedItem="{Binding SortDirection}"
+                              Grid.Column="1"
+                              FontSize="14">
+                        <ComboBoxItem Content="ASC"/>
+                        <ComboBoxItem Content="DESC"/>
+                    </ComboBox>
+                </Grid>
+
+                <Separator Margin="5 5 5 7" DockPanel.Dock="Top"/>
+                <TextBlock Style="{DynamicResource tbDefStyle}"
+                           FontSize="15"
+                           DockPanel.Dock="Top"
+                           Margin="5 5 0 0"
+                           Text="Odpowiedź HTTP"/>
+                <Separator Margin="5 5 5 7" DockPanel.Dock="Top"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         DataContext="{Binding HttpResponse}"
+                         Margin="5 5 5 0"
+                         DockPanel.Dock="Top"
+                         TextWrapping="Wrap"
+                         IsReadOnly="True"
+                         Text="{Binding ResponseMessage}"
+                         FontSize="14"/>
+            </DockPanel>
         </Expander>
 
         <Grid Grid.Column="1" Grid.Row="2" Background="{DynamicResource bgBrushOptions}">

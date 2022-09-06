@@ -30,9 +30,9 @@ namespace DentalClientWithRESTService.Models
         {
             _statusCode = response.StatusCode;
 
-            if (_statusCode == HttpStatusCode.BadRequest)
+            var content = response.Content.ReadAsStringAsync().Result;
+            if (!string.IsNullOrEmpty(content))
             {
-                var content = response.Content.ReadAsStringAsync().Result;
                 _responseMessage = JToken.Parse(content).ToString(Formatting.Indented);
             }
         }
