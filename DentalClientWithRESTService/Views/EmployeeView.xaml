@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DentalClientWithRESTService.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="1200">
     <Grid>
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="visConverter"/>
@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition MaxHeight="50"/>
             <RowDefinition/>
+            <RowDefinition MaxHeight="40"/>
         </Grid.RowDefinitions>
 
 
@@ -51,7 +52,7 @@
         </DockPanel>
 
         <DockPanel Grid.Column="2"
-                   Grid.RowSpan="2"
+                   Grid.RowSpan="3"
                    Background="{DynamicResource bgBrushOptions}">
 
             <StackPanel DockPanel.Dock="Bottom">
@@ -212,6 +213,7 @@
                   Background="{DynamicResource bgBrushOptions}"
                   Style="{DynamicResource expStyle}"
                       Grid.Column="0" Grid.Row="1"
+                      Grid.RowSpan="2"
                       FlowDirection="LeftToRight">
             <Expander.Header>
                 <TextBlock Text="Ustawienia / status klienta HTTP" FontSize="16">
@@ -220,21 +222,28 @@
                     </TextBlock.LayoutTransform>
                 </TextBlock>
             </Expander.Header>
-            <StackPanel Width="300" Background="{DynamicResource bgBrushOptions}">
+            <DockPanel Width="300" Background="{DynamicResource bgBrushOptions}">
+                <Button Style="{DynamicResource btnStyle}"
+                        Margin="5"
+                        DockPanel.Dock="Bottom"
+                        Content="Zastosuj"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="15"
                            Margin="5 5 0 0"
+                           DockPanel.Dock="Top"
                            Text="Filtracja - na podstawie wyrazu"/>
-                <TextBox Style="{DynamicResource typeStyle}"
+                <TextBox Style="{DynamicResource searchStyle}"
                          Margin="5 5 5 0"
-                         TextWrapping="Wrap"
-                         FontSize="14"/>
-                <Separator Margin="5 5 5 7"/>
+                         Height="30"
+                         DockPanel.Dock="Top"
+                         TextWrapping="Wrap"/>
+                <Separator Margin="5 5 5 7" DockPanel.Dock="Top"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="15"
+                           DockPanel.Dock="Top"
                            Margin="5 5 0 0"
                            Text="Sortowanie"/>
-                <Grid>
+                <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -252,22 +261,50 @@
                         <ComboBoxItem Content="DESC"/>
                     </ComboBox>
                 </Grid>
-               
-                <Separator Margin="5 5 5 7"/>
+
+                <Separator Margin="5 5 5 7" DockPanel.Dock="Top"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="15"
+                           DockPanel.Dock="Top"
                            Margin="5 5 0 0"
                            Text="Odpowiedź HTTP"/>
-                <Separator Margin="5 5 5 7"/>
+                <Separator Margin="5 5 5 7" DockPanel.Dock="Top"/>
                 <TextBox Style="{DynamicResource typeStyle}"
                          DataContext="{Binding HttpResponse}"
                          Margin="5 5 5 0"
+                         DockPanel.Dock="Top"
                          Visibility="{Binding IsResponseReady, Converter={StaticResource visConverter}}"
                          TextWrapping="Wrap"
                          IsReadOnly="True"
                          Text="{Binding ResponseMessage}"
                          FontSize="14"/>
-            </StackPanel>
+            </DockPanel>
         </Expander>
+
+        <Grid Grid.Column="1" Grid.Row="2" Background="{DynamicResource bgBrushOptions}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" 
+                    Margin="-2 0 0 0"
+                    Style="{DynamicResource pageBtnPrev}"
+                    Content="&lt;"/>
+            <Button Grid.Column="3"
+                    Margin="-2 0 0 0"
+                    Style="{DynamicResource pageBtnNext}"
+                    Content="&gt;"/>
+            <TextBlock Grid.Column="2"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Style="{DynamicResource tbDefStyle}">
+                <Run Text="1"/>
+                <Run Text=" / "/>
+                <Run Text="10"/>
+            </TextBlock>
+        </Grid>
     </Grid>
 </UserControl>

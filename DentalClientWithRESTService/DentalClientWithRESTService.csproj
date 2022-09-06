@@ -19,6 +19,7 @@
     <None Remove="Icons\logout.png" />
     <None Remove="Icons\main.png" />
     <None Remove="Icons\rightArrow.png" />
+    <None Remove="Icons\search.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +40,7 @@
     <Resource Include="Icons\logout.png" />
     <Resource Include="Icons\main.png" />
     <Resource Include="Icons\rightArrow.png" />
+    <Resource Include="Icons\search.png" />
   </ItemGroup>
 
 </Project>
