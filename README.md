@@ -16,6 +16,8 @@ Program przedstawiający prosty program do zarządzania przychodniami dentystycz
 🔧 **Fluent Validation**  
 🔧 **AutoMapper**  
 🔧 **Microsoft SQL Server**  
-🔧 **Swagger UI**
+🔧 **Swagger UI**  
+🔧 **NLog**  
+🔧 **xUnit / Moq**
 
 ## Wygląd aplikacji
