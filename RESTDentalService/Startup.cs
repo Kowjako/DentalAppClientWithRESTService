@@ -45,10 +45,23 @@ namespace RESTDentalService
 
             /* Middlewares */
             services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<RequestTimeMiddleware>();
 
             /* Services */
             services.AddScoped<IClinicService, ClinicService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IOperationService, OperationService>();
+
+            /* CORS */
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("frontend-client", builder =>
+                {
+                    builder.AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .WithOrigins(Configuration["AllowedOrigins"]);
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -59,6 +72,7 @@ namespace RESTDentalService
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<RequestTimeMiddleware>();
 
             app.UseHttpsRedirection();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -9,9 +10,11 @@ namespace RESTDentalService.Middleware
     /// </summary>
     public class ErrorHandlingMiddleware : IMiddleware
     {
-        public ErrorHandlingMiddleware()
-        {
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
+        public ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger)
+        {
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -29,6 +32,10 @@ namespace RESTDentalService.Middleware
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 await context.Response.WriteAsync("Wystapił błąd po stronie serwera");
+            }
+            finally
+            {
+                _logger.LogError(e, e.Message);
             }
         }
     }
