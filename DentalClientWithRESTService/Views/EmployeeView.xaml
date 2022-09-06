@@ -225,6 +225,7 @@
             <DockPanel Width="300" Background="{DynamicResource bgBrushOptions}">
                 <Button Style="{DynamicResource btnStyle}"
                         Margin="5"
+                        Command="{Binding AdvancedSearch}"
                         DockPanel.Dock="Bottom"
                         Content="Zastosuj"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
@@ -234,7 +235,9 @@
                            Text="Filtracja - na podstawie wyrazu"/>
                 <TextBox Style="{DynamicResource searchStyle}"
                          Margin="5 5 5 0"
+                         DataContext="{Binding SearchModel}"
                          Height="30"
+                         Text="{Binding SearchPhrase, UpdateSourceTrigger=PropertyChanged}"
                          DockPanel.Dock="Top"
                          TextWrapping="Wrap"/>
                 <Separator Margin="5 5 5 7" DockPanel.Dock="Top"/>
@@ -249,12 +252,16 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <ComboBox Margin="5 5 5 0"
+                              DataContext="{Binding SearchModel}"
+                              SelectedItem="{Binding SortBy}"
                               FontSize="14">
                         <ComboBoxItem Content="Imię"/>
                         <ComboBoxItem Content="Nazwisko"/>
                         <ComboBoxItem Content="E-mail"/>
                     </ComboBox>
                     <ComboBox Margin="5 5 5 0"
+                              DataContext="{Binding SearchModel}"
+                              SelectedItem="{Binding SortDirection}"
                               Grid.Column="1"
                               FontSize="14">
                         <ComboBoxItem Content="ASC"/>

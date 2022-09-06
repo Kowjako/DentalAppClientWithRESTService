@@ -14,8 +14,9 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition MaxHeight="50"/>
+            <RowDefinition MaxHeight="50" MinHeight="50"/>
             <RowDefinition/>
+            <RowDefinition MaxHeight="40"/>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Column="0"
@@ -47,7 +48,7 @@
         </DockPanel>
 
         <DockPanel Grid.Column="2"
-                   Grid.RowSpan="2"
+                   Grid.RowSpan="3"
                    Background="{DynamicResource bgBrushOptions}">
 
             <StackPanel DockPanel.Dock="Bottom">
@@ -180,6 +181,7 @@
                   Background="{DynamicResource bgBrushOptions}"
                   Style="{DynamicResource expStyle}"
                       Grid.Column="0" Grid.Row="1"
+                  Grid.RowSpan="2"
                       FlowDirection="LeftToRight">
             <Expander.Header>
                 <TextBlock Text="Ustawienia / status klienta HTTP" FontSize="16">
@@ -196,5 +198,34 @@
                 <Separator Margin="5 5 5 7"/>
             </StackPanel>
         </Expander>
+
+        <Grid Grid.Column="1" Grid.Row="2" Background="{DynamicResource bgBrushOptions}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" 
+                    Margin="-2 0 0 0"
+                    Command="{Binding PrevPage}"
+                    Style="{DynamicResource pageBtnPrev}"
+                    Content="&lt;"/>
+            <Button Grid.Column="3"
+                    Margin="-2 0 0 0"
+                    Command="{Binding NextPage}"
+                    Style="{DynamicResource pageBtnNext}"
+                    Content="&gt;"/>
+            <TextBlock Grid.Column="2"
+                       DataContext="{Binding PagedData}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Style="{DynamicResource tbDefStyle}">
+                <Run Text="{Binding PageNumber}"/>
+                <Run Text=" / "/>
+                <Run Text="{Binding TotalPages}"/>
+            </TextBlock>
+        </Grid>
     </Grid>
 </UserControl>

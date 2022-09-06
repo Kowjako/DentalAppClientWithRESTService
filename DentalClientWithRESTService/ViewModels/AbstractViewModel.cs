@@ -42,6 +42,8 @@ namespace DentalClientWithRESTService.ViewModels
 
         public List<T> Entities { get; set; }
 
+        public SearchModel SearchModel { get; set; } = new SearchModel();
+
         public async Task RefreshList()
         {
             var pagedResultResponse = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)]);
@@ -57,7 +59,11 @@ namespace DentalClientWithRESTService.ViewModels
             _nextPage ??= new RelayCommand(async (e) =>
             {
                 if (PagedData.PageNumber + 1 > PagedData.TotalPages) return;
-                var response = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)], pageNumber: PagedData.PageNumber + 1);
+                var response = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)],
+                                                                     searchPhrase: SearchModel.SearchPhrase,
+                                                                     sortDirection: SearchModel.SortDirectionNormalized,
+                                                                     sortBy: SearchModel.SortByNormalized,
+                                                                     pageNumber: PagedData.PageNumber + 1);
                 PagedData = await HttpClientProxy.Instance.ReadDataAsList<T>(response);
 
                 Entities = PagedData.Data.ToList();
@@ -71,7 +77,27 @@ namespace DentalClientWithRESTService.ViewModels
             _prevPage ??= new RelayCommand(async (e) =>
             {
                 if (PagedData.PageNumber - 1 < 1) return;
-                var response = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)], pageNumber: PagedData.PageNumber - 1);
+                var response = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)],
+                                                                     searchPhrase: SearchModel.SearchPhrase,
+                                                                     sortDirection: SearchModel.SortDirectionNormalized,
+                                                                     sortBy: SearchModel.SortByNormalized,
+                                                                     pageNumber: PagedData.PageNumber - 1);
+                PagedData = await HttpClientProxy.Instance.ReadDataAsList<T>(response);
+
+                Entities = PagedData.Data.ToList();
+
+                OnPropertyChanged(nameof(Entities));
+                OnPropertyChanged(nameof(PagedData));
+            });
+
+        private RelayCommand _advancedSearch;
+        public RelayCommand AdvancedSearch =>
+            _advancedSearch ??= new RelayCommand(async (e) =>
+            {
+                var response = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)], 
+                                                                     searchPhrase: SearchModel.SearchPhrase,
+                                                                     sortDirection: SearchModel.SortDirectionNormalized,
+                                                                     sortBy: SearchModel.SortByNormalized);
                 PagedData = await HttpClientProxy.Instance.ReadDataAsList<T>(response);
 
                 Entities = PagedData.Data.ToList();
