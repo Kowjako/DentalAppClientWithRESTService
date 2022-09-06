@@ -37,7 +37,7 @@
             <DataGrid Style="{DynamicResource gridStyle}"
                           ColumnWidth="*"
                           SelectedItem="{Binding SelectedEmployee}"
-                          ItemsSource="{Binding Employees}"
+                          ItemsSource="{Binding Entities}"
                           RowStyle="{DynamicResource gridRowStyle}"
                           CellStyle="{DynamicResource gridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource gridHeaderStyle}"

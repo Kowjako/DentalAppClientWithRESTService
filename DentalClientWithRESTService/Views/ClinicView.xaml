@@ -32,7 +32,7 @@
             <DataGrid Style="{DynamicResource gridStyle}"
                           ColumnWidth="*"
                           SelectedItem="{Binding SelectedClinic}"
-                          ItemsSource="{Binding Clinics}"
+                          ItemsSource="{Binding Entities}"
                           RowStyle="{DynamicResource gridRowStyle}"
                           CellStyle="{DynamicResource gridCellStyle}"
                           ColumnHeaderStyle="{DynamicResource gridHeaderStyle}"

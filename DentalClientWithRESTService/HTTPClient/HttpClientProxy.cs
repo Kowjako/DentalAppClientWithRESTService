@@ -1,12 +1,9 @@
-﻿using DentalClientWithRESTService.Models;
-using DentalClinicWithRestService.Models;
+﻿using DentalClinicWithRestService.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace DentalClientWithRESTService.HTTPClient
 {
@@ -24,12 +21,14 @@ namespace DentalClientWithRESTService.HTTPClient
             _client = new HttpClient();
         }
 
-        //for example clinic
-        public async Task<HttpResponseMessage> GetAll(string url, string sortDirection = "ASC", 
+        #region GET/POST/PUT/DELETE
+
+        // GET
+        public async Task<HttpResponseMessage> GetAll(string url, string sortDirection = "ASC",
                                                       string sortBy = "", int pageNumber = 1,
-                                                      string searchPhrase = "")   
+                                                      string searchPhrase = "")
         {
-            
+
             return await _client.GetAsync(_baseUrl + url + GenerateQueryParameters(new Dictionary<string, string>()
             {
                 { "sortDirection", sortDirection },
@@ -39,17 +38,19 @@ namespace DentalClientWithRESTService.HTTPClient
             }));
         }
 
+        // GET
         public async Task<HttpResponseMessage> GetById(string url, int id)
         {
             return await _client.GetAsync(_baseUrl + url + "/" + id);
         }
 
+        // DELETE
         public async Task<HttpResponseMessage> DeleteById(string url, int id)
         {
             return await _client.DeleteAsync(_baseUrl + url + "/" + id);
         }
 
-
+        // PUT
         public async Task<HttpResponseMessage> Update<T>(string url, T data)
         {
             var jsonData = JsonConvert.SerializeObject(data);
@@ -58,6 +59,7 @@ namespace DentalClientWithRESTService.HTTPClient
             return await _client.PutAsync(_baseUrl + url, requestContent);
         }
 
+        // POST
         public async Task<HttpResponseMessage> Add<T>(string url, T data)
         {
             var jsonData = JsonConvert.SerializeObject(data);
@@ -65,11 +67,19 @@ namespace DentalClientWithRESTService.HTTPClient
             return await _client.PostAsync(_baseUrl + url, requestContent);
         }
 
+        #endregion
+
+        #region Common
+
         public async Task<PagedResult<T>> ReadDataAsList<T>(HttpResponseMessage msg)
         {
             var data = await msg.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<PagedResult<T>>(data);
         }
+
+        #endregion
+
+        #region Private members
 
         private string GenerateQueryParameters(Dictionary<string, string> param)
         {
@@ -83,5 +93,9 @@ namespace DentalClientWithRESTService.HTTPClient
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
         }
+
+        #endregion
+
+
     }
 }

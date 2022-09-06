@@ -1,21 +1,14 @@
 ﻿using DentalClientWithRESTService.HTTPClient;
 using DentalClientWithRESTService.Models;
-using DentalClientWithRESTService.Views;
 using DentalClinicWithRestService.Models;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DentalClientWithRESTService.ViewModels
 {
-    public class EmployeeViewModel : INotifyPropertyChanged
+    public class EmployeeViewModel : AbstractViewModel<EmployeeDTO>
     {
-        public List<EmployeeDTO> Employees { get; set; }
-
         private EmployeeDTO _selectedEmployee;
         public EmployeeDTO SelectedEmployee
         {
@@ -27,41 +20,19 @@ namespace DentalClientWithRESTService.ViewModels
             }
         }
 
-        private HttpResponseWrapper _httpResponse;
-        public HttpResponseWrapper HttpResponse
-        {
-            get => _httpResponse;
-            set
-            {
-                _httpResponse = value;
-                OnPropertyChanged();
-            }
-        }
-
         public CreateEmployeeDTO CreateEmployee { get; set; } = new CreateEmployeeDTO();
-
-        private PagedResult<EmployeeDTO> _pagedData;
-        public PagedResult<EmployeeDTO> PagedData
-        {
-            get => _pagedData;
-            set
-            {
-                _pagedData = value;
-                OnPropertyChanged(nameof(PagedData));
-            }
-        }
 
         public EmployeeViewModel()
         {
             Task.Run(async () =>
             {
                 var response = await HttpClientProxy.Instance.GetAll("employee");
-                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+                PagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
             }).Wait();
 
-            Employees = _pagedData.Data.ToList();
+            Entities = PagedData.Data.ToList();
 
-            OnPropertyChanged(nameof(Employees));
+            OnPropertyChanged(nameof(Entities));
         }
 
         #region Commands
@@ -91,10 +62,10 @@ namespace DentalClientWithRESTService.ViewModels
                 HttpResponse = new HttpResponseWrapper(response);
 
                 var list = await HttpClientProxy.Instance.GetAll("employee");
-                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
-                Employees = _pagedData.Data.ToList();
+                PagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+                Entities = PagedData.Data.ToList();
 
-                OnPropertyChanged(nameof(Employees));
+                OnPropertyChanged(nameof(Entities));
             });
 
         private RelayCommand _addEmployee;
@@ -106,51 +77,14 @@ namespace DentalClientWithRESTService.ViewModels
                 HttpResponse = new HttpResponseWrapper(response);
 
                 var list = await HttpClientProxy.Instance.GetAll("employee");
-                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
-                Employees = _pagedData.Data.ToList();
+                PagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+                Entities = PagedData.Data.ToList();
 
-                OnPropertyChanged(nameof(Employees));
-            });
-
-        private RelayCommand _nextPage;
-        public RelayCommand NextPage =>
-            _nextPage ??= new RelayCommand(async (e) =>
-            {
-                if (_pagedData.PageNumber + 1 > _pagedData.TotalPages) return;
-                var response = await HttpClientProxy.Instance.GetAll("employee", pageNumber: _pagedData.PageNumber + 1);
-                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
-
-                Employees = _pagedData.Data.ToList();
-
-                OnPropertyChanged(nameof(Employees));
-                OnPropertyChanged(nameof(PagedData));
-            });
-
-        private RelayCommand _prevPage;
-        public RelayCommand PrevPage =>
-            _prevPage ??= new RelayCommand(async (e) =>
-            {
-                if (_pagedData.PageNumber - 1 < 1) return;
-                var response = await HttpClientProxy.Instance.GetAll("employee", pageNumber: _pagedData.PageNumber - 1);
-                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
-
-                Employees = _pagedData.Data.ToList();
-
-                OnPropertyChanged(nameof(Employees));
-                OnPropertyChanged(nameof(PagedData));
+                OnPropertyChanged(nameof(Entities));
             });
 
         #endregion
 
-        #region INotifyPropertyChanged members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
-        #endregion
+        
     }
 }
