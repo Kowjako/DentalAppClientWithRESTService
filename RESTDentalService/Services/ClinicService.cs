@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RESTDentalService.Entity;
 using RESTDentalService.Models;
 using System;
@@ -23,11 +24,13 @@ namespace RESTDentalService.Services
     {
         private readonly DentalRestDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<ClinicService> _logger;
 
-        public ClinicService(DentalRestDbContext context, IMapper mapper)
+        public ClinicService(DentalRestDbContext context, IMapper mapper, ILogger<ClinicService> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<PagedResult<ClinicDTO>> GetAll(DentalAdvQuery query)
@@ -105,6 +108,8 @@ namespace RESTDentalService.Services
 
             _context.Clinics.Remove(clinic);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation($"Przychodnia z Id = {clinic.Id} była usunięta");
         }
     }
 }

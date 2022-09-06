@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RESTDentalService.Entity;
 using RESTDentalService.Models;
 using System;
@@ -23,11 +24,13 @@ namespace RESTDentalService.Services
     {
         private readonly DentalRestDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<EmployeeService> _logger;
 
-        public EmployeeService(DentalRestDbContext context, IMapper mapper)
+        public EmployeeService(DentalRestDbContext context, IMapper mapper, ILogger<EmployeeService> logger)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<PagedResult<EmployeeDTO>> GetAll(DentalAdvQuery query)
@@ -90,6 +93,8 @@ namespace RESTDentalService.Services
 
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation($"Pracownik z Id = {employee.Id} był usunięty");
         }
 
         public async Task Update(int id, UpdateEmployeeDTO dto)
