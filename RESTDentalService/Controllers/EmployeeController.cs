@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RESTDentalService.Models;
 using RESTDentalService.Services;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RESTDentalService.Controllers

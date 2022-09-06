@@ -1,9 +1,12 @@
 ﻿using DentalClientWithRESTService.Models;
+using DentalClinicWithRestService.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DentalClientWithRESTService.HTTPClient
 {
@@ -22,9 +25,18 @@ namespace DentalClientWithRESTService.HTTPClient
         }
 
         //for example clinic
-        public async Task<HttpResponseMessage> GetAll(string url)
+        public async Task<HttpResponseMessage> GetAll(string url, string sortDirection = "ASC", 
+                                                      string sortBy = "", int pageNumber = 1,
+                                                      string searchPhrase = "")   
         {
-            return await _client.GetAsync(_baseUrl + url);
+            
+            return await _client.GetAsync(_baseUrl + url + GenerateQueryParameters(new Dictionary<string, string>()
+            {
+                { "sortDirection", sortDirection },
+                { "sortBy", sortBy },
+                { "pageNumber", pageNumber.ToString() },
+                { "searchPhrase", searchPhrase }
+            }));
         }
 
         public async Task<HttpResponseMessage> GetById(string url, int id)
@@ -53,10 +65,23 @@ namespace DentalClientWithRESTService.HTTPClient
             return await _client.PostAsync(_baseUrl + url, requestContent);
         }
 
-        public async Task<List<T>> ReadDataAsList<T>(HttpResponseMessage msg)
+        public async Task<PagedResult<T>> ReadDataAsList<T>(HttpResponseMessage msg)
         {
             var data = await msg.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<T>>(data);
+            return JsonConvert.DeserializeObject<PagedResult<T>>(data);
+        }
+
+        private string GenerateQueryParameters(Dictionary<string, string> param)
+        {
+            var sb = new StringBuilder();
+            sb.Append("?");
+            foreach (var k in param.Keys)
+            {
+                sb.Append(k + "=" + param[k]);
+                sb.Append("&");
+            }
+            sb.Remove(sb.Length - 1, 1);
+            return sb.ToString();
         }
     }
 }

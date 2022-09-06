@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RESTDentalService.Models
+namespace DentalClinicWithRestService.Models
 {
     public class PagedResult<T>
     {

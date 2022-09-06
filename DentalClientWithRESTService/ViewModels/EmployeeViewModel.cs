@@ -1,7 +1,7 @@
 ﻿using DentalClientWithRESTService.HTTPClient;
 using DentalClientWithRESTService.Models;
 using DentalClientWithRESTService.Views;
-using RESTDentalService.Models;
+using DentalClinicWithRestService.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,13 +40,26 @@ namespace DentalClientWithRESTService.ViewModels
 
         public CreateEmployeeDTO CreateEmployee { get; set; } = new CreateEmployeeDTO();
 
+        private PagedResult<EmployeeDTO> _pagedData;
+        public PagedResult<EmployeeDTO> PagedData
+        {
+            get => _pagedData;
+            set
+            {
+                _pagedData = value;
+                OnPropertyChanged(nameof(PagedData));
+            }
+        }
+
         public EmployeeViewModel()
         {
             Task.Run(async () =>
             {
                 var response = await HttpClientProxy.Instance.GetAll("employee");
-                Employees = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
             }).Wait();
+
+            Employees = _pagedData.Data.ToList();
 
             OnPropertyChanged(nameof(Employees));
         }
@@ -78,7 +91,9 @@ namespace DentalClientWithRESTService.ViewModels
                 HttpResponse = new HttpResponseWrapper(response);
 
                 var list = await HttpClientProxy.Instance.GetAll("employee");
-                Employees = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(list);
+                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+                Employees = _pagedData.Data.ToList();
+
                 OnPropertyChanged(nameof(Employees));
             });
 
@@ -91,8 +106,38 @@ namespace DentalClientWithRESTService.ViewModels
                 HttpResponse = new HttpResponseWrapper(response);
 
                 var list = await HttpClientProxy.Instance.GetAll("employee");
-                Employees = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(list);
+                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+                Employees = _pagedData.Data.ToList();
+
                 OnPropertyChanged(nameof(Employees));
+            });
+
+        private RelayCommand _nextPage;
+        public RelayCommand NextPage =>
+            _nextPage ??= new RelayCommand(async (e) =>
+            {
+                if (_pagedData.PageNumber + 1 > _pagedData.TotalPages) return;
+                var response = await HttpClientProxy.Instance.GetAll("employee", pageNumber: _pagedData.PageNumber + 1);
+                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+
+                Employees = _pagedData.Data.ToList();
+
+                OnPropertyChanged(nameof(Employees));
+                OnPropertyChanged(nameof(PagedData));
+            });
+
+        private RelayCommand _prevPage;
+        public RelayCommand PrevPage =>
+            _prevPage ??= new RelayCommand(async (e) =>
+            {
+                if (_pagedData.PageNumber - 1 < 1) return;
+                var response = await HttpClientProxy.Instance.GetAll("employee", pageNumber: _pagedData.PageNumber - 1);
+                _pagedData = await HttpClientProxy.Instance.ReadDataAsList<EmployeeDTO>(response);
+
+                Employees = _pagedData.Data.ToList();
+
+                OnPropertyChanged(nameof(Employees));
+                OnPropertyChanged(nameof(PagedData));
             });
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using DentalClientWithRESTService.Models;
 
-namespace RESTDentalService.Models
+namespace DentalClinicWithRestService.Models
 {
     public class EmployeeDTO
     {
