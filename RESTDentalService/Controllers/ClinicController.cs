@@ -18,9 +18,9 @@ namespace RESTDentalService.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ClinicDTO>>> GetAll()
+        public async Task<ActionResult<List<ClinicDTO>>> GetAll([FromQuery] DentalAdvQuery query)
         {
-            return Ok(await _service.GetAll());
+            return Ok(await _service.GetAll(query));
         }
 
         [HttpGet("{id}")]

@@ -4,13 +4,15 @@ using RESTDentalService.Entity;
 using RESTDentalService.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace RESTDentalService.Services
 {
     public interface IClinicService
     {
-        Task<List<ClinicDTO>> GetAll();
+        Task<PagedResult<ClinicDTO>> GetAll(DentalAdvQuery query);
         Task<ClinicDTO> GetById(int id);
         Task<int> Create(CreateClinicDTO clinicDTO);
         Task Update(int id, UpdateClinicDTO dto);
@@ -28,12 +30,36 @@ namespace RESTDentalService.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ClinicDTO>> GetAll()
+        public async Task<PagedResult<ClinicDTO>> GetAll(DentalAdvQuery query)
         {
-            var baseQuery = await _context.Clinics.Include(p => p.Manager).ToListAsync();
+            var baseQuery = _context.Clinics.Include(p => p.Manager)
+                                            .Where(p => query.SearchPhrase == null ||
+                                                   p.Name.ToLower().Contains(query.SearchPhrase.ToLower()) ||
+                                                   p.Location.ToLower().Contains(query.SearchPhrase.ToLower()));
 
-            var result = _mapper.Map<List<ClinicDTO>>(baseQuery);
-            return result;
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var dictionary = new Dictionary<string, Expression<Func<Clinic, string>>>()
+                {
+                    { nameof(Clinic.Name), r => r.Name },
+                    { nameof(Clinic.Location), r => r.Location},
+                    { nameof(Clinic.UniqueNumber), r => r.UniqueNumber },
+                };
+
+                var sortExpression = dictionary[query.SortBy];
+
+                baseQuery = query.SortDirection == SortType.Asc ?
+                            baseQuery.OrderBy(sortExpression) :
+                            baseQuery.OrderByDescending(sortExpression);
+            }
+
+            var clinics = await baseQuery.Skip((query.PageNumber - 1) * 30)
+                                           .Take(30)
+                                           .ToListAsync();
+
+            var result = _mapper.Map<List<ClinicDTO>>(clinics);
+
+            return new PagedResult<ClinicDTO>(result, baseQuery.Count(), 30, query.PageNumber);
         }
 
         public async Task<ClinicDTO> GetById(int id)
