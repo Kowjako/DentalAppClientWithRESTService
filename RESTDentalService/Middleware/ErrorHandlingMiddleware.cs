@@ -26,16 +26,14 @@ namespace RESTDentalService.Middleware
             catch (ArgumentNullException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
+                _logger.LogError(ex, ex.Message);
                 await context.Response.WriteAsync(ex.Message);
             }
             catch (Exception ex)
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                _logger.LogError(ex, ex.Message);
                 await context.Response.WriteAsync("Wystapił błąd po stronie serwera");
-            }
-            finally
-            {
-                _logger.LogError(e, e.Message);
             }
         }
     }

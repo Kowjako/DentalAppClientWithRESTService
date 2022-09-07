@@ -24,6 +24,11 @@ namespace RESTDentalService
                 .ForMember(d => d.Clinic, s => s.MapFrom(dto => dto.ClinicNavigation));
 
             CreateMap<CreateEmployeeDTO, Employee>();
+
+            CreateMap<Operation, OperationDTO>()
+                .ForMember(d => d.Clinic, s => s.MapFrom(dto => dto.Clinic.Name))
+                .ForMember(d => d.Doctor, s => s.MapFrom(dto => dto.Employee.Name + " " + dto.Employee.Surname))
+                .ForMember(d => d.Term, s => s.MapFrom(dto => dto.Term.ToShortDateString()));
         }
     }
 }

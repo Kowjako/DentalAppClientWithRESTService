@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace RESTDentalService.Middleware
 {
+    /// <summary>
+    /// Globalny middleware do logowania długich zapytań
+    /// </summary>
     public class RequestTimeMiddleware : IMiddleware
     {
         private readonly Stopwatch _stopWatch;
