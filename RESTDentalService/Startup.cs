@@ -41,7 +41,7 @@ namespace RESTDentalService
             services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
             services.AddScoped<IValidator<CreateClinicDTO>, CreateClinicDTOValidator>();
             services.AddScoped<IValidator<CreateEmployeeDTO>, CreateEmployeeDTOValidator>();
-
+            services.AddScoped<IValidator<CreateOperationDTO>, CreateOperationDTOValidator>();
 
             /* Middlewares */
             services.AddScoped<ErrorHandlingMiddleware>();
