@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RESTDentalService.Entity;
 using RESTDentalService.Models;
+using System;
 
 namespace RESTDentalService
 {
@@ -29,6 +30,9 @@ namespace RESTDentalService
                 .ForMember(d => d.Clinic, s => s.MapFrom(dto => dto.Clinic.Name))
                 .ForMember(d => d.Doctor, s => s.MapFrom(dto => dto.Employee.Name + " " + dto.Employee.Surname))
                 .ForMember(d => d.Term, s => s.MapFrom(dto => dto.Term.ToShortDateString()));
+
+            CreateMap<CreateOperationDTO, Operation>()
+                .ForMember(c => c.Term, s => s.MapFrom(dto => DateTime.Parse(dto.Date)));
         }
     }
 }
