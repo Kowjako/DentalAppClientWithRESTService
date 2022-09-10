@@ -16,6 +16,8 @@ namespace RESTDentalService.Entity
         public virtual DbSet<Clinic> Clinics { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -97,6 +99,28 @@ namespace RESTDentalService.Entity
                     .HasForeignKey(d => d.EmployeeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Operations_EmployeeId");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
+
+                entity.Property(e => e.FirstName).HasMaxLength(255);
+
+                entity.Property(e => e.LastName).HasMaxLength(255);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Users_RoleId");
             });
 
             OnModelCreatingPartial(modelBuilder);
