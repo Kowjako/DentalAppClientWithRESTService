@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using RESTDentalService.Authentication;
 using RESTDentalService.Entity;
 using RESTDentalService.Middleware;
 using RESTDentalService.Models;
 using RESTDentalService.Services;
 using RESTDentalService.Validators;
+using System.Text;
 
 namespace RESTDentalService
 {
@@ -26,6 +30,25 @@ namespace RESTDentalService
 
         public void ConfigureServices(IServiceCollection services)
         {
+            /* Register Auth settings */
+            var authSettings = new AuthSettings();
+            Configuration.GetSection("Authentication").Bind(authSettings);
+            services.AddSingleton(authSettings);
+
+            /* Register JWT Bearer token Authentication */
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(cfg =>
+                    {
+                        cfg.RequireHttpsMetadata = false;
+                        cfg.SaveToken = true;
+                        cfg.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidIssuer = authSettings.JwtIssuer,
+                            ValidAudience = authSettings.JwtIssuer,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.JwtKey))
+                        };
+                    });
+
             services.AddControllers();
             services.AddDbContext<DentalRestDbContext>(opt =>
             {
@@ -77,6 +100,8 @@ namespace RESTDentalService
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseMiddleware<RequestTimeMiddleware>();
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 
