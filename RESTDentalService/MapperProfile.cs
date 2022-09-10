@@ -32,6 +32,8 @@ namespace RESTDentalService
 
             CreateMap<CreateOperationDTO, Operation>()
                 .ForMember(c => c.Term, s => s.MapFrom(dto => DateTime.Parse(dto.Date)));
+
+            CreateMap<RegisterUserDTO, User>();
         }
     }
 }

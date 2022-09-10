@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +43,7 @@ namespace RESTDentalService
             services.AddScoped<IValidator<CreateClinicDTO>, CreateClinicDTOValidator>();
             services.AddScoped<IValidator<CreateEmployeeDTO>, CreateEmployeeDTOValidator>();
             services.AddScoped<IValidator<CreateOperationDTO>, CreateOperationDTOValidator>();
+            services.AddScoped<IValidator<RegisterUserDTO>, RegisterUserDTOValidator>();
 
             /* Middlewares */
             services.AddScoped<ErrorHandlingMiddleware>();
@@ -51,6 +53,8 @@ namespace RESTDentalService
             services.AddScoped<IClinicService, ClinicService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IOperationService, OperationService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
             /* CORS */
             services.AddCors(opt =>
