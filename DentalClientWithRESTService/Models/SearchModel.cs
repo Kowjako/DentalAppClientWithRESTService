@@ -12,6 +12,8 @@ namespace DentalClientWithRESTService.Models
             {"Numer unikalny", "UniqueNumber" },
             {"Adres", "Location" },
             {"Nazwa", "Name" },
+            {"Cena", "Cost" },
+            {"Termim", "Term" }
         };
 
         public string SearchPhrase { get; set; } = string.Empty;

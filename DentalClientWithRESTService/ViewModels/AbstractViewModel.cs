@@ -10,12 +10,54 @@ using System.Threading.Tasks;
 
 namespace DentalClientWithRESTService.ViewModels
 {
+    public abstract class AbstractViewModelWithSubentity<T, V> : AbstractViewModel<T>
+    {
+        private V _selectedSubEntity;
+        public V SelectedSubEntity
+        {
+            get => _selectedSubEntity;
+            set
+            {
+                _selectedSubEntity = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<V> SubEntities { get; set; }
+
+        public override RelayCommand AdvancedSearch => new RelayCommand(async (e) =>
+        {
+            var response = await HttpClientProxy.Instance.GetAll(BuildRouteToSubEntitiy(),
+                                                                 searchPhrase: SearchModel.SearchPhrase,
+                                                                 sortDirection: SearchModel.SortDirectionNormalized,
+                                                                 sortBy: SearchModel.SortByNormalized);
+            HttpResponse = new HttpResponseWrapper(response);
+
+            SubEntities = await HttpClientProxy.Instance.ReadDataAsListWithoutPaging<V>(response);
+            OnPropertyChanged(nameof(SubEntities));
+        });
+
+        public async Task LoadSubEntities()
+        {
+            var response = await HttpClientProxy.Instance.GetAll(BuildRouteToSubEntitiy(),
+                                                                 searchPhrase: SearchModel.SearchPhrase,
+                                                                 sortDirection: SearchModel.SortDirectionNormalized,
+                                                                 sortBy: SearchModel.SortByNormalized);
+            HttpResponse = new HttpResponseWrapper(response);
+
+            SubEntities = await HttpClientProxy.Instance.ReadDataAsListWithoutPaging<V>(response);
+            OnPropertyChanged(nameof(SubEntities));
+        }
+
+        public abstract string BuildRouteToSubEntitiy();
+    }
+
     public abstract class AbstractViewModel<T> : INotifyPropertyChanged
     {
-        private Dictionary<Type, string> _typeToHttpMapper = new Dictionary<Type, string>()
+        protected Dictionary<Type, string> _typeToHttpMapper = new Dictionary<Type, string>()
         {
             { typeof(Clinic), "clinic" },
-            { typeof(EmployeeDTO), "employee" }
+            { typeof(EmployeeDTO), "employee" },
         };
 
         private HttpResponseWrapper _httpResponse;
@@ -93,7 +135,7 @@ namespace DentalClientWithRESTService.ViewModels
             });
 
         private RelayCommand _advancedSearch;
-        public RelayCommand AdvancedSearch =>
+        public virtual RelayCommand AdvancedSearch =>
             _advancedSearch ??= new RelayCommand(async (e) =>
             {
                 var response = await HttpClientProxy.Instance.GetAll(_typeToHttpMapper[typeof(T)], 
