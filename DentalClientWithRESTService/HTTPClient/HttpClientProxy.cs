@@ -51,6 +51,12 @@ namespace DentalClientWithRESTService.HTTPClient
             return await _client.DeleteAsync(_baseUrl + url + "/" + id);
         }
 
+        // DELETE
+        public async Task<HttpResponseMessage> Delete(string url)
+        {
+            return await _client.DeleteAsync(_baseUrl + url);
+        }
+
         // PUT
         public async Task<HttpResponseMessage> Update<T>(string url, T data)
         {

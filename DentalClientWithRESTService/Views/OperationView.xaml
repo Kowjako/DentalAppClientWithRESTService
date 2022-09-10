@@ -98,7 +98,7 @@
                         Content="Usuń wybraną operację"/>
                 <Button Style="{DynamicResource btnStyle}"
                         Margin="5"
-                        Command="{Binding DeleteOperation}"
+                        Command="{Binding DeleteAllOperations}"
                         Content="Usuń wszystkie operacje tej przychodni"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" DataContext="{Binding HttpResponse}">
@@ -147,7 +147,7 @@
                            Text="Termin"/>
                 <TextBox Style="{DynamicResource typeStyle}"
                          Margin="5 5 5 0"
-                         Text="{Binding Term, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}"
                          FontSize="14"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}"
                            FontSize="14"

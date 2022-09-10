@@ -15,10 +15,23 @@ namespace RESTDentalService.Validators
 
             RuleFor(x => x).Custom((obj, context) =>
             {
-                if (!dbContext.Employees.Any(p => p.Name.Equals(obj.DoctorName) &&
-                                                  p.Surname.Equals(obj.DoctorSurname)))
+                var employee = dbContext.Employees.FirstOrDefault(p => p.Name.Equals(obj.DoctorName) &&
+                                                                       p.Surname.Equals(obj.DoctorSurname));
+                var clinic = dbContext.Clinics.FirstOrDefault(p => p.Id == obj.ClinicId);
+
+                if(employee == null)
                 {
-                    context.AddFailure("Takiego lekarza nie istnieje");
+                    context.AddFailure("Clinic", "Nie istnieje takigo pracownika");
+                }
+
+                if (clinic == null)
+                {
+                    context.AddFailure("Clinic", "Nie istnieje takiej przychodni");
+                } 
+
+                if (employee.ClinicId != clinic.Id)
+                {
+                    context.AddFailure("Employee", "Ten pracownik nie nalezy do tej przychodni");
                 }
             });
 

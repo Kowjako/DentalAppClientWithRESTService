@@ -28,12 +28,7 @@ namespace RESTDentalService.Validators
 
                 if (clinic == null)
                 {
-                    context.AddFailure("Nie istnieje takiej przychodni");
-                }
-
-                if(employee.ClinicId != clinic.Id)
-                {
-                    context.AddFailure("Ten pracownik nie nalezy do tej przychodni");
+                    context.AddFailure("Clinic", "Nie istnieje takiej przychodni");
                 }
             });
         }

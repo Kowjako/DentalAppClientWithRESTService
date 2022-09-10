@@ -13,7 +13,7 @@ namespace DentalClientWithRESTService.Models
             {"Adres", "Location" },
             {"Nazwa", "Name" },
             {"Cena", "Cost" },
-            {"Termim", "Term" }
+            {"Termin", "Term" }
         };
 
         public string SearchPhrase { get; set; } = string.Empty;

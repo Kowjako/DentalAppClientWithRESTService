@@ -25,13 +25,14 @@ namespace DentalClientWithRESTService.ViewModels
             get => _selectedClinic;
             set
             {
+                if (value == null) return;
                 _selectedClinic = value;
                 OnPropertyChanged();
                 Task.Run(async () => await LoadSubEntities()).Wait();
             }
         }
 
-        public CreateOperationDTO CreateEmployee { get; set; } = new CreateOperationDTO();
+        public CreateOperationDTO CreateOperation { get; set; } = new CreateOperationDTO();
 
         public OperationViewModel()
         {
@@ -61,22 +62,34 @@ namespace DentalClientWithRESTService.ViewModels
         public RelayCommand DeleteOperation =>
             _deleteOperation ??= new RelayCommand(async (e) =>
             {
-                //var response = await HttpClientProxy.Instance.DeleteById("employee", SelectedEmployee.Id);
+                var response = await HttpClientProxy.Instance.DeleteById(BuildRouteToSubEntitiy(), SelectedSubEntity.Id);
 
-                //HttpResponse = new HttpResponseWrapper(response);
+                HttpResponse = new HttpResponseWrapper(response);
 
-                //await RefreshList();
+                await RefreshList();
+            });
+
+        private RelayCommand _deleteAllOperations;
+        public RelayCommand DeleteAllOperations =>
+            _deleteAllOperations ??= new RelayCommand(async (e) =>
+            {
+                var response = await HttpClientProxy.Instance.Delete(BuildRouteToSubEntitiy());
+
+                HttpResponse = new HttpResponseWrapper(response);
+
+                await RefreshList();
             });
 
         private RelayCommand _addOperation;
         public RelayCommand AddOperation =>
             _addOperation ??= new RelayCommand(async (e) =>
             {
-                //var response = await HttpClientProxy.Instance.Add("employee", CreateEmployee);
+                CreateOperation.ClinicId = SelectedClinic.Id;
+                var response = await HttpClientProxy.Instance.Add(BuildRouteToSubEntitiy(), CreateOperation);
 
-                //HttpResponse = new HttpResponseWrapper(response);
+                HttpResponse = new HttpResponseWrapper(response);
 
-                //await RefreshList();
+                await RefreshList();
             });
 
         #endregion
