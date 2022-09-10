@@ -16,19 +16,24 @@ namespace RESTDentalService.Validators
 
             RuleFor(x => x).Custom((value, context) =>
             {
-                if (dbContext.Employees.Any(p => p.Name == value.Name &&
-                                                 p.Surname == value.Surname &&
-                                                 p.Email == value.Email))
+                var employee = dbContext.Employees.FirstOrDefault(p => p.Name == value.Name &&
+                                                                       p.Surname == value.Surname &&
+                                                                       p.Email == value.Email);
+                var clinic = dbContext.Clinics.First(p => p.UniqueNumber.Equals(value.ClinicUniqueNumber));
+
+                if (employee == null)
                 {
                     context.AddFailure("CreateEmployeeDTO", "Imie, Nazwisko i Email muszą być unikalne");
                 }
-            });
 
-            RuleFor(x => x.ClinicUniqueNumber).Custom((value, context) =>
-            {
-                if (!dbContext.Clinics.Any(p => p.UniqueNumber.Equals(value)))
+                if (clinic == null)
                 {
                     context.AddFailure("Nie istnieje takiej przychodni");
+                }
+
+                if(employee.ClinicId != clinic.Id)
+                {
+                    context.AddFailure("Ten pracownik nie nalezy do tej przychodni");
                 }
             });
         }

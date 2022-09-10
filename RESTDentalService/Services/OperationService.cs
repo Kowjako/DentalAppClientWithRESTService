@@ -13,7 +13,7 @@ namespace RESTDentalService.Services
 {
     public interface IOperationService
     {
-        Task<PagedResult<OperationDTO>> GetAll(int clinicId, DentalAdvQuery query);
+        Task<List<OperationDTO>> GetAll(int clinicId, DentalAdvQuery query);
         Task<int> Create(int clinidId, CreateOperationDTO operation);
         Task DeleteById(int id);
         Task DeleteAllForClinic(int clinicId);
@@ -69,7 +69,7 @@ namespace RESTDentalService.Services
             _logger.LogInformation($"Operacja z Id = {operation.Id} była usunięta");
         }
 
-        public async Task<PagedResult<OperationDTO>> GetAll(int clinicId, DentalAdvQuery query)
+        public async Task<List<OperationDTO>> GetAll(int clinicId, DentalAdvQuery query)
         {
             var baseQuery = _context.Operations.Include(p => p.Employee)
                                                .Include(p => p.Clinic)
@@ -96,13 +96,9 @@ namespace RESTDentalService.Services
             }
 
             var clinics = await baseQuery.Where(p => p.ClinicId == clinicId)
-                                         .Skip((query.PageNumber - 1) * 30)
-                                         .Take(30)
                                          .ToListAsync();
 
-            var result = _mapper.Map<List<OperationDTO>>(clinics);
-
-            return new PagedResult<OperationDTO>(result, baseQuery.Count(), 30, query.PageNumber);
+            return _mapper.Map<List<OperationDTO>>(clinics);
         }
     }
 }

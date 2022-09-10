@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-
 namespace RESTDentalService.Entity
 {
     public partial class DentalRestDbContext : DbContext
