@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RESTDentalService.Models;
 using RESTDentalService.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RESTDentalService.Controllers
@@ -17,7 +18,7 @@ namespace RESTDentalService.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResult<OperationDTO>>> GetOperations([FromRoute]int clinicId, [FromRoute]DentalAdvQuery query)
+        public async Task<ActionResult<List<OperationDTO>>> GetOperations([FromRoute]int clinicId, [FromQuery]DentalAdvQuery query)
         {
             return Ok(await _service.GetAll(clinicId, query));
         }
