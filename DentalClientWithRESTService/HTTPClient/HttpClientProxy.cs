@@ -11,6 +11,7 @@ namespace DentalClientWithRESTService.HTTPClient
     {
         private const string _baseUrl = "https://localhost:44347/api/";
 
+        // Singletone of istance, so every call will be fone thru the same http proxy
         private static HttpClientProxy _instance;
         public static HttpClientProxy Instance => _instance ?? (_instance = new HttpClientProxy());
 
@@ -75,6 +76,12 @@ namespace DentalClientWithRESTService.HTTPClient
         {
             var data = await msg.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<PagedResult<T>>(data);
+        }
+
+        public async Task<List<T>> ReadDataAsListWithoutPaging<T>(HttpResponseMessage msg)
+        {
+            var data = await msg.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<T>>(data);
         }
 
         #endregion
