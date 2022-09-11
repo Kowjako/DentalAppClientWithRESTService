@@ -23,8 +23,8 @@ namespace RESTDentalService.Controllers
             return Ok();
         }
 
-        [HttpPost("{login}/{password}")]
-        public async Task<ActionResult<string>> Login([FromRoute]string login, [FromRoute]string password)
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> Login([FromQuery]string login, [FromQuery] string password)
         {
             return Ok(await _service.GenerateJWT(login, password));
         }
