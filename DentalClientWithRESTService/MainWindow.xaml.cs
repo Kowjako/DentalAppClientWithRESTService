@@ -91,5 +91,10 @@ namespace DentalClientWithRESTService
             MaxHeight = SystemParameters.WorkArea.Height;
             this.WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
+
+        private void closeApp_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

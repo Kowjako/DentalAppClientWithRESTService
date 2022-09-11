@@ -69,6 +69,8 @@
                         </MenuItem>
                         <Separator Template="{DynamicResource VsMenuSep }"/>
                         <MenuItem Header="Zamknij"
+                                  x:Name="closeApp"
+                                  Click="closeApp_Click"
                                   Template="{DynamicResource VsMenuSub}"/>
 
                     </MenuItem>
