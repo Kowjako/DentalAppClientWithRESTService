@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RESTDentalService.Authorization;
 using RESTDentalService.Entity;
 using RESTDentalService.Models;
 using System;
@@ -25,12 +27,17 @@ namespace RESTDentalService.Services
         private readonly DentalRestDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<ClinicService> _logger;
+        private readonly IAuthorizationService _authService;
+        private readonly IUserContextService _userService;
 
-        public ClinicService(DentalRestDbContext context, IMapper mapper, ILogger<ClinicService> logger)
+        public ClinicService(DentalRestDbContext context, IMapper mapper, ILogger<ClinicService> logger,
+                             IAuthorizationService authService, IUserContextService userService)
         {
             _context = context;
             _mapper = mapper;
             _logger = logger;
+            _authService = authService;
+            _userService = userService;
         }
 
         public async Task<PagedResult<ClinicDTO>> GetAll(DentalAdvQuery query)
@@ -105,6 +112,10 @@ namespace RESTDentalService.Services
         {
             var clinic = await _context.Clinics.FindAsync(id);
             if (clinic == null) throw new ArgumentNullException("Takiej przychodni nie istnieje");
+
+            var authResult = await _authService.AuthorizeAsync(_userService.User, clinic, new AdminOrManagerRequirement());
+
+            if (!authResult.Succeeded) throw new InvalidOperationException("Nie masz dostępu do tej akcji");
 
             _context.Clinics.Remove(clinic);
             await _context.SaveChangesAsync();

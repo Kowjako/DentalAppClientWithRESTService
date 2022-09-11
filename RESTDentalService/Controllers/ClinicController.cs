@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RESTDentalService.Models;
 using RESTDentalService.Services;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 namespace RESTDentalService.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ClinicController : ControllerBase
     {
@@ -30,6 +32,7 @@ namespace RESTDentalService.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateClinic([FromBody]CreateClinicDTO dto)
         {
             var id = await _service.Create(dto);
@@ -37,6 +40,7 @@ namespace RESTDentalService.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateClinic([FromRoute]int id, [FromBody]UpdateClinicDTO dto)
         {
             await _service.Update(id, dto);
