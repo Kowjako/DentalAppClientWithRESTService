@@ -76,6 +76,7 @@ CREATE TABLE Users (
 	Id INT IDENTITY(1,1),
 	FirstName NVARCHAR(255),
 	LastName NVARCHAR(255),
+	Email NVARCHAR(255) NOT NULL,
 	DateOfBirth DATE,
 	PasswordHash NVARCHAR(MAX),
 	RoleId INT NOT NULL,

@@ -112,6 +112,10 @@ namespace RESTDentalService.Entity
             {
                 entity.Property(e => e.DateOfBirth).HasColumnType("date");
 
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
                 entity.Property(e => e.FirstName).HasMaxLength(255);
 
                 entity.Property(e => e.LastName).HasMaxLength(255);
