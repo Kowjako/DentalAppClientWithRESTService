@@ -47,9 +47,7 @@ namespace RESTDentalService.Services
 
         public async Task<string> GenerateJWT(string login, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(p => p.Email == login);
-            await _context.Entry(user).Reference(u => u.Role).LoadAsync();
-
+            var user = await _context.Users.Include(p => p.Role).FirstOrDefaultAsync(p => p.Email == login);
             if (user == null) throw new ArgumentNullException("Takiego użytkownika nie istnieje");
 
             var isPassCorrect = _hasher.VerifyHashedPassword(user, user.PasswordHash, password);
