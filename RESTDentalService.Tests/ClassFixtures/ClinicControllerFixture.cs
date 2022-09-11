@@ -25,6 +25,7 @@ namespace RESTDentalService.Tests.ClassFixtures
             LoggerMock = new Mock<ILogger<ClinicService>>();
             DbMock = new Mock<DentalRestDbContext>();
             AuthServiceMock = new Mock<IAuthorizationService>();
+            UserServiceMock = new Mock<IUserContextService>();
 
             ClinicService = new ClinicService(DbMock.Object,
                                               MapperMock.Object,
