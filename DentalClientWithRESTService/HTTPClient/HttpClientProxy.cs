@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,18 +51,21 @@ namespace DentalClientWithRESTService.HTTPClient
         // DELETE
         public async Task<HttpResponseMessage> DeleteById(string url, int id)
         {
+            PassAuthroizationToken();
             return await _client.DeleteAsync(_baseUrl + url + "/" + id);
         }
 
         // DELETE
         public async Task<HttpResponseMessage> Delete(string url)
         {
+            PassAuthroizationToken();
             return await _client.DeleteAsync(_baseUrl + url);
         }
 
         // PUT
         public async Task<HttpResponseMessage> Update<T>(string url, T data)
         {
+            PassAuthroizationToken();
             var jsonData = JsonConvert.SerializeObject(data);
 
             var requestContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -71,6 +75,7 @@ namespace DentalClientWithRESTService.HTTPClient
         // POST
         public async Task<HttpResponseMessage> Add<T>(string url, T data)
         {
+            PassAuthroizationToken();
             var jsonData = JsonConvert.SerializeObject(data);
             var requestContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             return await _client.PostAsync(_baseUrl + url, requestContent);
@@ -121,6 +126,8 @@ namespace DentalClientWithRESTService.HTTPClient
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
         }
+
+        private void PassAuthroizationToken() => _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", JwtToken);
 
         #endregion
 
