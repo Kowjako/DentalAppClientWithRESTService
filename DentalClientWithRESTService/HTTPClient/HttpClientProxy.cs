@@ -17,6 +17,8 @@ namespace DentalClientWithRESTService.HTTPClient
 
         private HttpClient _client;
 
+        public string JwtToken { get; set; } = string.Empty;
+
         private HttpClientProxy()
         {
             _client = new HttpClient();
@@ -72,6 +74,16 @@ namespace DentalClientWithRESTService.HTTPClient
             var jsonData = JsonConvert.SerializeObject(data);
             var requestContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             return await _client.PostAsync(_baseUrl + url, requestContent);
+        }
+
+        public async Task<HttpResponseMessage> Login(string login, string pass)
+        {
+            return await _client.PostAsync(_baseUrl + "account/login" + GenerateQueryParameters(new Dictionary<string, string>()
+            {
+                {"login", login },
+                {"password", pass }
+            }), new StringContent("none"));
+
         }
 
         #endregion

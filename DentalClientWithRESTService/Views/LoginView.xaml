@@ -30,10 +30,20 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="1" Grid.Column="1">
                 <TextBlock Style="{DynamicResource tbDefStyle}" Text="Login"/>
-                <TextBox Style="{DynamicResource typeStyle}"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Style="{DynamicResource tbDefStyle}" Text="Hasło"/>
-                <TextBox Style="{DynamicResource typeStyle}"/>
-                <Button Content="Zaloguj się" Style="{DynamicResource btnStyle}" Margin="0 25 0 0"/>
+                <TextBox Style="{DynamicResource typeStyle}"
+                         Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Zaloguj się" 
+                        Command="{Binding PerformLogin}"
+                        Style="{DynamicResource btnStyle}" 
+                        Margin="0 25 0 0"/>
+                <TextBlock TextAlignment="Center" 
+                           Margin="0 15 0 0"
+                           HorizontalAlignment="Center"
+                           Style="{DynamicResource tbDefStyle}" 
+                           Text="{Binding ResponseMessage}"/>
             </StackPanel>
         </Grid>
     </Grid>
