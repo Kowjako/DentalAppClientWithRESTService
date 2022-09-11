@@ -17,6 +17,6 @@ namespace RESTDentalService.Models
         public SortType SortDirection { get; set; }
         public string SearchPhrase { get; set; }
 
-        public int PageNumber { get; set; }
+        public int PageNumber { get; set; } = 1;
     }
 }

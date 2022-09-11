@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using RESTDentalService.Authentication;
+using RESTDentalService.Authorization;
 using RESTDentalService.Entity;
 using RESTDentalService.Middleware;
 using RESTDentalService.Models;
@@ -72,12 +74,21 @@ namespace RESTDentalService
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<RequestTimeMiddleware>();
 
+            /* Authorization */
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("AdminOrManager", builder => builder.AddRequirements(new AdminOrManagerRequirement()));
+            });
+            services.AddScoped<IAuthorizationHandler, AdminOrManagerRequirementHandler>();
+
             /* Services */
             services.AddScoped<IClinicService, ClinicService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IOperationService, OperationService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IUserContextService, UserContextService>();
+            services.AddHttpContextAccessor(); //potrzebny do wstzykniecia do UserContextService
 
             /* CORS */
             services.AddCors(opt =>
@@ -109,6 +120,8 @@ namespace RESTDentalService
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dental API"));
 
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

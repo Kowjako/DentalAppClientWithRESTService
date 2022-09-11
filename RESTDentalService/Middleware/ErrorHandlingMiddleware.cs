@@ -29,6 +29,11 @@ namespace RESTDentalService.Middleware
                 _logger.LogError(ex, ex.Message);
                 await context.Response.WriteAsync(ex.Message);
             }
+            catch (InvalidOperationException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                _logger.LogError(ex, ex.Message);
+            }
             catch (Exception ex)
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
