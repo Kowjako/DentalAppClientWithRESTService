@@ -5,8 +5,66 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DentalClientWithRESTService.Views"
              mc:Ignorable="d" 
+             Background="{DynamicResource viewBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Background="{DynamicResource bgBrush}">
+            <TextBlock Text="Rejestracja użytkownika" Grid.Row="0"
+                       Style="{DynamicResource tbStyle}"
+                       HorizontalAlignment="Center"/>
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <StackPanel DataContext="{Binding UserData}">
+                    <TextBlock Style="{DynamicResource tbDefStyle}" Text="Imię"/>
+                    <TextBox Style="{DynamicResource typeStyle}"
+                         Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Style="{DynamicResource tbDefStyle}" Text="Nazwisko"/>
+                    <TextBox Style="{DynamicResource typeStyle}"
+                         Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Style="{DynamicResource tbDefStyle}" Text="Email"/>
+                    <TextBox Style="{DynamicResource typeStyle}"
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Style="{DynamicResource tbDefStyle}" Text="Data urodzenia"/>
+                    <DatePicker
+                         FontSize="14"
+                         SelectedDate="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Style="{DynamicResource tbDefStyle}" Text="Hasło"/>
+                    <TextBox Style="{DynamicResource typeStyle}"
+                         Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Style="{DynamicResource tbDefStyle}" Text="Rola"/>
+                    <ComboBox SelectedIndex="{Binding RoleId, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="Admin"/>
+                            <ComboBoxItem Content="Lekarz"/>
+                            <ComboBoxItem Content="Pacjent"/>
+                        </ComboBox.Items>
+                    </ComboBox>
+                </StackPanel>
+                <Button Content="Zarejestruj się" 
+                        Command="{Binding RegisterUser}"
+                        Style="{DynamicResource btnStyle}" 
+                        Margin="0 25 0 0"/>
+                <TextBlock TextAlignment="Center" 
+                           Margin="0 15 0 0"
+                           HorizontalAlignment="Center"
+                           Style="{DynamicResource tbDefStyle}" 
+                           Text="{Binding ResponseMessage}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
