@@ -20,12 +20,14 @@ namespace RESTDentalService.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<List<ClinicDTO>>> GetAll([FromQuery] DentalAdvQuery query)
         {
             return Ok(await _service.GetAll(query));
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ClinicDTO>> Get([FromRoute]int id)
         {
             return Ok(await _service.GetById(id));
