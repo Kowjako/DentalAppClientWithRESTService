@@ -19,6 +19,17 @@ namespace RESTDentalService.Tests.MockData
             };
         }
 
+        public static Employee CreateEmployee()
+        {
+            return new Employee()
+            {
+                Id = 1,
+                Name = "TEST",
+                Surname = "TEST",
+                Email = "kowjako@gmail.com"
+            };
+        }
+
         public static CreateClinicDTO CreateClinicDTO()
         {
             return new CreateClinicDTO()
@@ -28,6 +39,17 @@ namespace RESTDentalService.Tests.MockData
                 ManagerName = "TEST",
                 ManagerSurname = "TEST",
                 Location = "TEST"
+            };
+        }
+
+        public static CreateEmployeeDTO CreateEmployeeDTO()
+        {
+            return new CreateEmployeeDTO()
+            {
+                Name = "Test",
+                Surname = "Test",
+                Phone = "111-111-111",
+                ClinicUniqueNumber = "ZAX1234567"
             };
         }
 
