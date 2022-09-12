@@ -19,13 +19,34 @@ namespace RESTDentalService.Tests.MockData
             };
         }
 
+        public static Operation CreateOperation()
+        {
+            return new Operation()
+            {
+                Id = 5,
+                Name = "Test"
+            };
+        }
+
+        public static CreateOperationDTO CreateOperationDTO()
+        {
+            return new CreateOperationDTO()
+            {
+                ClinicId = 1,
+                Name = "Test",
+                DoctorName = "Test",
+                DoctorSurname = "Test",
+                Cost = 10.0m
+            };
+        }
+
         public static Employee CreateEmployee()
         {
             return new Employee()
             {
                 Id = 1,
-                Name = "TEST",
-                Surname = "TEST",
+                Name = "Test",
+                Surname = "Test",
                 Email = "kowjako@gmail.com"
             };
         }
@@ -61,6 +82,34 @@ namespace RESTDentalService.Tests.MockData
                 Name = "TEST",
                 UniqueNumber = "ZAX1234567",
                 Location = "TEST"
+            };
+        }
+
+        public static IEnumerable<Operation> CreateOperations()
+        {
+            yield return new Operation()
+            {
+                Id = 1,
+                ClinicId = 1,
+                Cost = 10.0m,
+                Term = DateTime.Now,
+                Name = "Test"
+            };
+            yield return new Operation()
+            {
+                Id = 2,
+                ClinicId = 1,
+                Cost = 10.0m,
+                Term = DateTime.Now,
+                Name = "Test"
+            };
+            yield return new Operation()
+            {
+                Id = 3,
+                ClinicId = 2,
+                Cost = 10.0m,
+                Term = DateTime.Now,
+                Name = "Test"
             };
         }
 
